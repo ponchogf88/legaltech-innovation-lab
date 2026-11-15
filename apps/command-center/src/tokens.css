@@ -1,0 +1,80 @@
+/* ==========================================================================
+   LegalTech Innovation Lab · Design Tokens (Obsidian + Warm Parchment)
+   Aligned with docs/DESIGN_SYSTEM.md
+   ========================================================================== */
+
+:root {
+  /* Obsidian Dark Rail & Topbar */
+  --bg-obsidian: #151917;
+  --bg-obsidian-elevated: #1e2421;
+  --bg-obsidian-hover: #262e2a;
+  --border-dark: #2c3530;
+
+  /* Parchment Warm Editorial Workspace */
+  --bg-parchment: #f2ede2;
+  --bg-parchment-elevated: #faf7f0;
+  --bg-parchment-sunken: #e7e1d3;
+  --border-warm: #c8c4b5;
+  --border-warm-subtle: #dcd7c9;
+
+  /* Brand & Semantic Accents */
+  --accent-copper: #b8643f;
+  --accent-copper-ink: #8b4628;
+  --accent-copper-soft: rgba(184, 100, 63, 0.12);
+
+  --accent-sage: #4a6b5b;
+  --accent-sage-ink: #324b3f;
+  --accent-sage-soft: rgba(74, 107, 91, 0.13);
+
+  --accent-amber: #c4883a;
+  --accent-amber-ink: #7d5218;
+  --accent-amber-soft: rgba(196, 136, 58, 0.15);
+
+  --danger-crimson: #9e3b33;
+  --danger-crimson-ink: #7c2b24;
+  --danger-crimson-soft: rgba(158, 59, 51, 0.12);
+
+  /* Typography Ink Colors */
+  --text-ink: #1a1f1c;
+  --text-muted: #5c635c;
+  --text-on-dark: #ede8dc;
+  --text-on-dark-muted: #a6afa8;
+
+  /* Typography Scale */
+  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.875rem;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius Scale */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* Shadows (tinted to surface hue) */
+  --shadow-warm-sm: 0 1px 2px rgba(26, 31, 28, 0.06), 0 1px 4px rgba(26, 31, 28, 0.04);
+  --shadow-warm-md: 0 6px 18px rgba(26, 31, 28, 0.08), 0 2px 6px rgba(26, 31, 28, 0.05);
+  --shadow-dark-sm: 0 2px 8px rgba(10, 12, 11, 0.35);
+
+  /* Layout Dimensions */
+  --topbar-height: 60px;
+  --left-rail-width: 260px;
+  --right-pane-width: 370px;
+}
