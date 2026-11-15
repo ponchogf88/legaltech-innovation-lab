@@ -1,68 +1,32 @@
-# `TASKS.md` — Mission Tracking & Engineering Backlog
+# `TASKS.md` — Persistent Task Queue & Mission Tracking
 
-## Mission 001 — Governed Monorepo & Editorial Command Center
-
-Mission 001 establishes the complete `legaltech-innovation-lab` monorepo across five isolated workstreams before merging into `dev/mission-001` and undergoing **Gemini 4 Argon** merge-gate review for `main`.
-
-### Workstream Tracking Matrix (Workstreams A–E)
-
-| Workstream | Scope & Title | Owner | Branch & Worktree | Primary Deliverables | Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **A** | Repository & Engineering Documentation | Gemini 4 Hydrogen (Docs) + Gemini 4 Argon (Review) | `feat/docs-governance`<br>`wt-docs` | `README.md`, `AGENTS.md`, `TASKS.md`, `SECURITY.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_SYSTEM.md` | **Completed & Merged into `dev/mission-001` (`ddda412`)** |
-| **B** | Core Python Legal Engine, Persistence & API | Gemini 4 Hydrogen (Backend) | `feat/backend-core`<br>`wt-backend` | `packages/legal_engine/` (`models.py`, `intake.py`, `documents.py`, `review.py`, `submissions.py`, `authorities.py`, `deadlines.py`, `storage.py`, `api.py`, `cli.py`), `templates/`, `examples/` | **Completed & Merged into `dev/mission-001` (`8c46f7d`)** |
-| **C** | Security, Privacy, AI Governance & Audit Chain | Gemini 4 Hydrogen (Security) | `feat/security-privacy`<br>`wt-security` | `packages/legal_engine/security.py`, `tests/test_security_guardrails.py`, PII/secret guardrails, LFPDPPP & EU AI Act readiness checks | **Completed & Merged into `dev/mission-001` (`920aa5b`)** |
-| **D** | Editorial LegalTech Command Center UI | Gemini 4 Hydrogen (Frontend) | `feat/frontend-ui`<br>`wt-frontend` | `apps/command-center/` (React 18 + Vite, `tokens.css`, 3-column workstation, Agent Rail, interactive HITL Review Gate, Evidence & Audit Inspector) | **Completed & Merged into `dev/mission-001` (`d8f4e87`)** |
-| **E** | Integration, End-to-End Verification & Merge Gate | Gemini 4 Argon (Gate) + Gemini 4 Hydrogen (Integration) | `dev/mission-001`<br>`legaltech-innovation-lab` | Merge A–D into `dev/mission-001`, resolve interface contracts, run full `pytest -v`, `demo`, `security-check`, `npm run build`, audit synthetic-only compliance before `main` | **Verified on `dev/mission-001`; Pending Owner Approval for `main` Merge** |
+> Governed by `PROJECT_STATE.json` and the immutable 72-Hour Project Clock (`72H_CLOCK.json`: `2026-11-15T14:03:47-06:00` $\rightarrow$ `2026-11-18T14:03:47-06:00`).  
+> Every task specifies: **Task ID**, **Description**, **Priority**, **Dependencies**, **Assigned Agent**, **Status**, **Acceptance Criteria**, and **Evidence of Completion**.
 
 ---
 
-### Mission 001 Acceptance Criteria Checklists
+## Mission 002 — Continuous Engineering Protocol, E2E & CI Gates
 
-#### Workstream A — Repository & Engineering Documentation (`feat/docs-governance`)
-- [x] `README.md` distinguishes `legaltech-innovation-lab` from `ponchogf88/legal-practice-agent` and states legacy UI demo quarantine.
-- [x] `AGENTS.md` defines the dual-tier operating model (Argon/Hydrogen + Hermes/Themis/Dike/Nomos/Chronos/Apollō) and hard safety rules.
-- [x] `TASKS.md` documents Mission 001 Workstreams A–E and Mission 002 backlog.
-- [x] `SECURITY.md` specifies HITL gate enforcement, PII/secret guardrails, AI Act & LFPDPPP alignment, `MockAuthority` isolation, and hash-chained audit verification.
-- [x] `docs/ARCHITECTURE.md` includes Mermaid pipeline flowchart, submission state machine diagram, and module inventory table.
-- [x] `docs/DESIGN_SYSTEM.md` defines `--bg-obsidian`, `--bg-parchment`, `--bg-parchment-elevated`, semantic accents, typography scale, 3-column workstation layout, WCAG contrast, and Fact-vs-Conclusion separation rules.
-- [x] All 6 files audited and committed cleanly on `feat/docs-governance` with zero files outside owned paths.
-
-#### Workstream B — Core Python Legal Engine (`feat/backend-core`)
-- [x] `packages/legal_engine/` implements `models.py`, `intake.py`, `documents.py`, `review.py`, `submissions.py`, `authorities.py`, `deadlines.py`, `storage.py`, `api.py`, and `cli.py`.
-- [x] `documents.py` enforces `jinja2.StrictUndefined` rendering against `templates/`.
-- [x] `submissions.submit()` blocks any non-approved submission with `SubmissionBlockedError`.
-- [x] `authorities.py` exposes only `MockAuthority` issuing `MOCK-` prefixed folios.
-- [x] `python -m legal_engine.cli demo` completes end-to-end with 100% synthetic fixtures from `examples/`.
-- [x] Unit and integration tests pass via `pytest -v`.
-
-#### Workstream C — Security, Privacy & AI Governance (`feat/security-privacy`)
-- [x] `security.py` detects and flags synthetic-policy violations (`RFC`, `CURP`, `CLABE`, PEM/FIEL keys, real-case quarantine markers).
-- [x] `evaluate_governance_readiness` scores EU AI Act and LFPDPPP controls cleanly.
-- [x] `audit.py` implements append-only SHA-256 hash-chained JSONL logging and `AuditLog.verify_integrity()`.
-- [x] `python -m legal_engine.cli security-check` executes cleanly and passes on repository artifacts.
-- [x] Security and tamper-detection tests pass via `pytest -v`.
-
-#### Workstream D — Editorial LegalTech Command Center (`feat/frontend-ui`)
-- [x] `apps/command-center/` scaffolds React 18 + Vite application consuming `tokens.css` per `docs/DESIGN_SYSTEM.md`.
-- [x] 3-column workstation implements Left Agent Rail, Center Orchestration & HITL Review Gate, and Right Evidence & Audit Inspector.
-- [x] Interactive HITL gate triggers `approve` (`IN_REVIEW -> APPROVED`) and `reject` (`IN_REVIEW -> DRAFT`) transitions and reflects Fact-vs-Conclusion visual separation.
-- [x] `cd apps/command-center && npm run build` succeeds with zero build errors.
-
-#### Workstream E — Integration & Merge Gate (`dev/mission-001` -> `main`)
-- [x] Branches `feat/docs-governance`, `feat/backend-core`, `feat/security-privacy`, and `feat/frontend-ui` merged cleanly into `dev/mission-001`.
-- [x] Full `pytest -v` suite passes post-merge with zero skipped/relaxed assertions.
-- [x] `python -m legal_engine.cli demo` and `python -m legal_engine.cli security-check` pass post-merge.
-- [x] `cd apps/command-center && npm run build` succeeds post-merge.
-- [ ] Owner reviews `dev/mission-001` deliverables and authorizes merge into `main` (per Mission 001 rule: never merge unreviewed changes into `main`).
+| Task ID | Description | Priority | Dependencies | Assigned Agent | Status | Acceptance Criteria | Evidence of Completion |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`M2-00`** | Initialize Continuous Engineering Protocol, immutable 72-hour project clock (`2026-11-15T14:03:47-06:00`), continuity Python engine, CLI commands (`clock`, `state`, `checkpoint`), and reporting artifacts. | `P0` | `M1-E3` | `Hydrogen-Continuity + Argon` | **`DONE`** | `continuity.py` + `tests/test_continuity_clock.py` pass; `72H_CLOCK.json`, `PROJECT_STATE.json`, `MILESTONES.md`, `EXECUTION_LOG.md`, `CHECKPOINT.json`, and updated `TASKS.md` pass `security-check`. | `tests/test_continuity_clock.py` (`8/8 passed`), `72H_CLOCK.json` verified immutable |
+| **`M2-01`** | Automated Playwright headless Chromium E2E suite verifying Command Center synthetic intake, Fact-vs-Conclusion separation, `SubmissionBlockedError` HITL lock, rejection loop (`IN_REVIEW -> DRAFT`), nominal lawyer approval (`APPROVED`), `MockAuthority` (`MOCK-`) folio receipt, and SHA-256 audit timeline integrity. | `P0` | `M2-00` | `Hydrogen-E2E` | **`READY`** | `tests/e2e/command_center_e2e.mjs` passes all 6 DOM/state checks against built `dist/`; `tests/test_e2e_playwright.py` passes inside `pytest`. | Pending isolated worktree `feat/m2-playwright-e2e` |
+| **`M2-04`** | Automated GitHub Actions CI Quality & Security Gate (`.github/workflows/ci-quality-security.yml`) enforcing `security-check`, `pytest`, CLI `demo`/`clock`/`state`, Vite build, and Playwright E2E, plus contract tests (`tests/test_ci_workflow.py`). | `P0` | `M2-00` | `Hydrogen-CI` | **`READY`** | `.github/workflows/ci-quality-security.yml` uses least-privilege `contents: read`, triggers on `main` & `dev/**`, and runs all quality/security/E2E gates; `tests/test_ci_workflow.py` passes. | Pending isolated worktree `feat/m2-ci-gate` |
+| **`M2-02`** | Structured OpenTelemetry span instrumentation across `intake`, `documents`, `review`, `submissions`, `security`, and `api.py` endpoints. | `P1` | `M2-01`, `M2-04` | `Hydrogen-Telemetry` | **`BACKLOG`** | Span attributes trace workflow stages with zero PII leakage. | Scheduled after `M2-01` & `M2-04` |
+| **`M2-03`** | Real-time Server-Sent Events (SSE) bridge from `api.py` to React Command Center UI for live `ReviewQueue` and `AuditLog` updates. | `P1` | `M2-01` | `Hydrogen-SSE` | **`BACKLOG`** | Command Center receives live SSE events with automatic local sandbox fallback. | Scheduled after `M2-01` |
+| **`M2-05`** | Additional 100% synthetic domain packs (corporate governance & regulatory compliance) with strict schema contracts and Jinja2 templates. | `P2` | `M2-01` | `Hydrogen-Templates` | **`BACKLOG`** | Synthetic domain fixtures & templates pass `security-check` and unit tests. | Scheduled after `M2-01` |
 
 ---
 
-## Mission 002 Backlog (Planned Enhancements)
+## Mission 001 — Completed Archive (`dev/mission-001` @ `8d3ad92`)
 
-| ID | Initiative | Summary | Target Area |
-| :--- | :--- | :--- | :--- |
-| **M2-01** | **Playwright E2E Verification** | Automated headless browser suite driving the full React Command Center against live local `api.py` (intake selection, HITL rejection back to `DRAFT`, approval to `APPROVED`, `MockAuthority` `MOCK-` dispatch, and audit log verification). | `apps/command-center/`, `tests/e2e/` |
-| **M2-02** | **OpenTelemetry Tracing** | Structured OTel spans and trace context propagation across `intake`, `documents`, `review`, `submissions`, `security`, and `api.py` endpoints for latency and decision-path observability. | `packages/legal_engine/` |
-| **M2-03** | **Real-Time SSE Bridge** | Server-Sent Events endpoint in `api.py` pushing live `ReviewQueue` transitions, `Chronos` deadline alerts, and `AuditLog` hash entries directly to the Command Center without manual polling. | `packages/legal_engine/api.py`, `apps/command-center/` |
-| **M2-04** | **Automated CI Quality & Security Gate** | GitHub Actions workflow running `pytest -v`, `security-check`, `npm run build`, WCAG contrast/axe checks, and Mermaid syntax linting on every PR targeting `dev/*` or `main`. | `.github/workflows/` |
-| **M2-05** | **Synthetic Domain Expansion Packs** | Additional synthetic procedural templates (e.g., administrative notices, synthetic contract review checklists) with strict schema contracts and OCR human-validation fixtures. | `templates/`, `examples/` |
+| Task ID | Description | Priority | Dependencies | Assigned Agent | Status | Acceptance Criteria | Evidence of Completion |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`M1-A1`** | Repository governance, architecture docs, dual-tier agent operating model, and editorial design system (`README.md`, `AGENTS.md`, `TASKS.md`, `SECURITY.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_SYSTEM.md`). | `P0` | — | `Hydrogen-Docs + Argon` | **`DONE`** | All 6 governance/architecture docs committed cleanly on `feat/docs-governance`. | Merged at `ddda412` (`a1afe48`) |
+| **`M1-B1`** | Core Python `legal_engine` package (`models`, `intake`, `documents`, `review`, `submissions`, `authorities`, `deadlines`, `storage`, `api`, `cli`), Jinja2 templates, synthetic examples. | `P0` | `M1-A1` | `Hydrogen-Backend` | **`DONE`** | `StrictUndefined` templates, `SubmissionBlockedError` before `APPROVED`, `MockAuthority` `MOCK-` folios only, `cli demo` passing. | Merged at `8c46f7d` (`3b88834`) |
+| **`M1-C1`** | Security/PII/real-case guardrails (`security.py`), EU AI Act + LFPDPPP governance evaluator, and SHA-256 `AuditLog`. | `P0` | `M1-A1` | `Hydrogen-Security` | **`DONE`** | Zero PII/secret findings on repo scan; `evaluate_governance_readiness` 6/6; hash-chain tamper detection verified. | Merged at `920aa5b` (`3ec6edd`) |
+| **`M1-D1`** | Editorial LegalTech Command Center UI (`apps/command-center/`: React 18 + Vite, `tokens.css`, Agent Rail, HITL gate panel, Fact-vs-Conclusion inspector, Audit timeline). | `P0` | `M1-A1` | `Hydrogen-Frontend` | **`DONE`** | UI builds cleanly (`vite build`) and enforces client-side HITL lock & synthetic watermark. | Merged at `d8f4e87` (`281e359`) |
+| **`M1-E1`** | Integration test suite (`tests/test_engine_core.py`, `tests/test_storage_sqlite.py`, `tests/test_api_endpoints.py`). | `P0` | `M1-B1`, `M1-C1`, `M1-D1` | `Hydrogen-Integration` | **`DONE`** | `50/50` pytest tests passing with zero skipped assertions. | Commit `8ff5bb0` on `dev/mission-001` |
+| **`M1-E2`** | Cross-verification of repository security scan (`security-check`), SAT generic RFC placeholders, and CLI entrypoint parity. | `P0` | `M1-E1` | `Argon + Hydrogen` | **`DONE`** | `python -m legal_engine.cli security-check` clean (`scan_clean: true`, `governance_ready: true`). | Commits `8ff5bb0`, `8d3ad92` |
+| **`M1-E3`** | Mission 001 engineering deployment and security verification report (`docs/MISSION_001_REPORT.md`). | `P0` | `M1-E2` | `Argon` | **`DONE`** | Comprehensive accuracy-checked Mission 001 report committed and passing `security-check`. | Commits `2219551`, `8d3ad92` |
+| **`M1-MAIN-MERGE`** | Owner review and authorization to merge verified `dev/*` deliverables into `main` (`119c13d`). | `P1` | `M1-E3` | `Project Owner + Argon` | **`BLOCKED`** | Explicit owner authorization granted for `main` fast-forward/merge. | Pending Owner Approval (Blocker `B-02`; `main` untouched at `119c13d`) |

@@ -1,0 +1,9 @@
+# `MILESTONES.md` — LegalTech Innovation Lab Engineering Milestones
+
+| Milestone | Scope | Status | Target Window | Key Evidence |
+| :--- | :--- | :--- | :--- | :--- |
+| **Milestone 001** | Governed Monorepo, Core Legal Engine (`legal_engine`), Security/Privacy Guardrails, Editorial Command Center UI, Integration Tests (`50/50`), Mission Report | **COMPLETED (Dev Verified)** | `2026-11-15T14:03:47-06:00` $\rightarrow$ `2026-11-15T14:24:01-06:00` | Branch `dev/mission-001` (`8d3ad92`), `50 passed`, `security-check` clean (`6/6`), `vite build` green |
+| **Milestone 001-Gate** | Owner review and authorization to merge `dev/*` into `main` (`119c13d`) | **BLOCKED (Awaiting Owner Approval)** | Open | `main` preserved untouched at `119c13d` per safety policy |
+| **Milestone 002-Continuity (`M2-00`)** | Persistent Continuous Engineering Protocol (`72H_CLOCK.json`, `PROJECT_STATE.json`, `CHECKPOINT.json`, `EXECUTION_LOG.md`, `TASKS.md`, `continuity.py`, CLI `clock`/`state`/`checkpoint`) | **COMPLETED** | `2026-11-15T15:40:00-06:00` | `tests/test_continuity_clock.py` (`8/8 passed`), immutable start confirmed `2026-11-15T14:03:47-06:00`, deadline `2026-11-18T14:03:47-06:00` |
+| **Milestone 002-Core (`M2-01` & `M2-04`)** | Playwright Headless Browser E2E Suite (`M2-01`) & Automated GitHub Actions CI Quality/Security Gate (`M2-04`) via isolated worktrees | **IN_PROGRESS (Queued Parallel Worktrees)** | Within 72h Clock Window (`2026-11-18T14:03:47-06:00`) | Worktrees `feat/m2-playwright-e2e` and `feat/m2-ci-gate` |
+| **Milestone 002-Extended (`M2-02`, `M2-03`, `M2-05`)** | OpenTelemetry Tracing, Real-Time SSE Bridge, Synthetic Domain Expansion Packs | **BACKLOG** | Within 72h Clock Window | Queued after `M2-01` and `M2-04` |

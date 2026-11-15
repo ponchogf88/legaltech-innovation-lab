@@ -16,6 +16,16 @@ from uuid import uuid4
 from .api import run_server
 from .audit import AuditLog
 from .authorities import get_authority
+from .continuity import (
+    CHECKPOINT_FILENAME,
+    CLOCK_FILENAME,
+    STATE_FILENAME,
+    compute_clock_status,
+    identify_next_unblocked_task,
+    inspect_git_state,
+    save_checkpoint,
+    validate_task_queue,
+)
 from .deadlines import compute_deadlines
 from .documents import render_document
 from .intake import intake_matter
@@ -259,6 +269,93 @@ def _run_serve_api(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_clock(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve()
+    clock_path = root / CLOCK_FILENAME
+    if not clock_path.is_file():
+        print(f"72-hour clock file not found: {clock_path}", file=sys.stderr)
+        return 1
+    try:
+        status = compute_clock_status(clock_path)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Invalid 72-hour clock file ({clock_path}): {exc}", file=sys.stderr)
+        return 1
+    print(json.dumps(status, indent=2, ensure_ascii=False))
+    return 0
+
+
+def _run_state(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve()
+    state_path = root / STATE_FILENAME
+    clock_path = root / CLOCK_FILENAME
+    if not state_path.is_file():
+        print(f"Project state file not found: {state_path}", file=sys.stderr)
+        return 1
+    if not clock_path.is_file():
+        print(f"72-hour clock file not found: {clock_path}", file=sys.stderr)
+        return 1
+
+    try:
+        state_data = json.loads(state_path.read_text(encoding="utf-8"))
+        clock_status = compute_clock_status(clock_path)
+    except Exception as exc:  # noqa: BLE001
+        print(f"Failed to load continuity state: {exc}", file=sys.stderr)
+        return 1
+
+    tasks = state_data.get("tasks", [])
+    task_errors = validate_task_queue(tasks)
+    next_task = identify_next_unblocked_task(tasks) if not task_errors else None
+    try:
+        git_state = inspect_git_state(root)
+    except Exception as exc:  # noqa: BLE001
+        git_state = {"error": str(exc)}
+
+    done_count = sum(1 for t in tasks if isinstance(t, dict) and t.get("status") == "DONE")
+    summary = {
+        "valid": len(task_errors) == 0,
+        "task_errors": task_errors,
+        "root": str(root),
+        "project": state_data.get("project"),
+        "active_mission": state_data.get("active_mission"),
+        "completed_missions": state_data.get("completed_missions", []),
+        "active_blockers": state_data.get("active_blockers", []),
+        "git_state": git_state,
+        "clock_snapshot": clock_status,
+        "total_tasks": len(tasks),
+        "done_tasks": done_count,
+        "remaining_tasks_count": len(tasks) - done_count,
+        "next_executable_task": next_task,
+    }
+    print(json.dumps(summary, indent=2, ensure_ascii=False))
+    return 0 if not task_errors else 1
+
+
+def _run_checkpoint(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve()
+    state_path = root / STATE_FILENAME
+    clock_path = root / CLOCK_FILENAME
+    checkpoint_path = root / CHECKPOINT_FILENAME
+    if not state_path.is_file() or not clock_path.is_file():
+        print(
+            f"Continuity baseline missing under {root} (requires {STATE_FILENAME} and {CLOCK_FILENAME}).",
+            file=sys.stderr,
+        )
+        return 1
+    try:
+        payload = save_checkpoint(
+            repo_root=root,
+            last_completed_operation=args.op,
+            state_path=state_path,
+            checkpoint_path=checkpoint_path,
+            clock_path=clock_path,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"Failed to save checkpoint: {exc}", file=sys.stderr)
+        return 1
+    print(json.dumps(payload, indent=2, ensure_ascii=False))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Construct the CLI argument parser for legal_engine."""
     parser = argparse.ArgumentParser(
@@ -347,6 +444,44 @@ def build_parser() -> argparse.ArgumentParser:
         help="JSONL audit log path.",
     )
     api_parser.set_defaults(func=_run_serve_api)
+
+    clock_parser = subparsers.add_parser(
+        "clock",
+        help="Display live elapsed and remaining time for the immutable 72-hour project clock.",
+    )
+    clock_parser.add_argument(
+        "--root",
+        default=str(DEFAULT_REPO_ROOT),
+        help="Repository root containing 72H_CLOCK.json.",
+    )
+    clock_parser.set_defaults(func=_run_clock)
+
+    state_parser = subparsers.add_parser(
+        "state",
+        help="Validate PROJECT_STATE.json and print live git/clock/task summary.",
+    )
+    state_parser.add_argument(
+        "--root",
+        default=str(DEFAULT_REPO_ROOT),
+        help="Repository root containing PROJECT_STATE.json and 72H_CLOCK.json.",
+    )
+    state_parser.set_defaults(func=_run_state)
+
+    chk_parser = subparsers.add_parser(
+        "checkpoint",
+        help="Save a recovery checkpoint snapshot into CHECKPOINT.json.",
+    )
+    chk_parser.add_argument(
+        "--root",
+        default=str(DEFAULT_REPO_ROOT),
+        help="Repository root containing continuity files.",
+    )
+    chk_parser.add_argument(
+        "--op",
+        required=True,
+        help="Description of the last completed operation.",
+    )
+    chk_parser.set_defaults(func=_run_checkpoint)
 
     return parser
 

@@ -1,0 +1,13 @@
+{
+  "clock_id": "LEGALTECH-72H-MISSION-CLOCK",
+  "protocol": "LEGALTECH-CONTINUOUS-ENGINEERING-PROTOCOL",
+  "immutable_start_iso": "2026-11-15T14:03:47-06:00",
+  "immutable_start_utc": "2026-11-15T20:03:47Z",
+  "deadline_iso": "2026-11-18T14:03:47-06:00",
+  "deadline_utc": "2026-11-18T20:03:47Z",
+  "duration_hours": 72,
+  "duration_seconds": 259200,
+  "auto_reset_allowed": false,
+  "survives_restarts": true,
+  "created_by_commit": "8d3ad92"
+}
