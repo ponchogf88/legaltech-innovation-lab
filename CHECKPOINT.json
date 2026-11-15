@@ -1,27 +1,17 @@
 {
-  "checkpoint_id": "CHK-20261115T214351Z",
-  "timestamp_utc": "2026-11-15T21:43:51Z",
-  "last_completed_operation": "Initialized M2-00 continuity engine, 72H_CLOCK.json, PROJECT_STATE.json, MILESTONES.md, EXECUTION_LOG.md, and TASKS.md",
+  "checkpoint_id": "CHK-20261115T214625Z",
+  "timestamp_utc": "2026-11-15T21:46:25Z",
+  "last_completed_operation": "Completed M2-00, M2-01 (Playwright E2E), and M2-04 (CI Quality & Security Gate); verified 60/60 pytest & security-check clean",
   "current_branch": "dev/mission-002",
-  "current_git_commit": "8d3ad92cde01daea3a441facddd90f9eb976e20f",
-  "current_git_short_commit": "8d3ad92",
-  "uncommitted_changes": [
-    " M TASKS.md",
-    " M packages/legal_engine/__init__.py",
-    " M packages/legal_engine/cli.py",
-    "?? 72H_CLOCK.json",
-    "?? EXECUTION_LOG.md",
-    "?? MILESTONES.md",
-    "?? PROJECT_STATE.json",
-    "?? packages/legal_engine/continuity.py",
-    "?? tests/test_continuity_clock.py"
-  ],
+  "current_git_commit": "d607a5ecdf10bfb8f4fdbd68b416acca0b2a9c3d",
+  "current_git_short_commit": "d607a5e",
+  "uncommitted_changes": [],
   "clock_status": {
     "immutable_start_iso": "2026-11-15T14:03:47-06:00",
     "deadline_iso": "2026-11-18T14:03:47-06:00",
-    "elapsed_human": "01h 40m 04s",
-    "remaining_human": "70h 19m 55s",
-    "progress_pct": 2.32,
+    "elapsed_human": "01h 42m 38s",
+    "remaining_human": "70h 17m 21s",
+    "progress_pct": 2.38,
     "is_expired": false
   },
   "remaining_tasks": [
@@ -31,20 +21,6 @@
       "status": "BLOCKED",
       "assigned_agent": "Project Owner + Argon",
       "description": "Owner review and explicit authorization to merge verified dev branch deliverables into main (119c13d)."
-    },
-    {
-      "task_id": "M2-01",
-      "priority": "P0",
-      "status": "READY",
-      "assigned_agent": "Hydrogen-E2E",
-      "description": "Playwright headless Chromium E2E verification driving apps/command-center through evidence validation, Fact-vs-Conclusion verification, HITL SubmissionBlockedError lock, rejection loop, lawyer approval, MockAuthority receipt folio, and SHA-256 audit timeline integrity."
-    },
-    {
-      "task_id": "M2-04",
-      "priority": "P0",
-      "status": "READY",
-      "assigned_agent": "Hydrogen-CI",
-      "description": "Automated GitHub Actions CI quality & security gate (.github/workflows/ci-quality-security.yml) and workflow contract tests (tests/test_ci_workflow.py)."
     },
     {
       "task_id": "M2-02",
@@ -69,24 +45,25 @@
     }
   ],
   "next_executable_task": {
-    "task_id": "M2-01",
-    "description": "Playwright headless Chromium E2E verification driving apps/command-center through evidence validation, Fact-vs-Conclusion verification, HITL SubmissionBlockedError lock, rejection loop, lawyer approval, MockAuthority receipt folio, and SHA-256 audit timeline integrity.",
-    "priority": "P0",
+    "task_id": "M2-02",
+    "description": "Structured OpenTelemetry span instrumentation across intake, documents, review, submissions, security, and api.py handlers.",
+    "priority": "P1",
     "dependencies": [
-      "M2-00"
+      "M2-01",
+      "M2-04"
     ],
-    "assigned_agent": "Hydrogen-E2E",
-    "status": "READY",
+    "assigned_agent": "Hydrogen-Telemetry",
+    "status": "BACKLOG",
     "acceptance_criteria": [
-      "tests/e2e/command_center_e2e.mjs executes cleanly against built dist/ bundle and tests/test_e2e_playwright.py passes inside pytest."
+      "OTel-compatible span hooks emit structured timing/state attributes with zero live PII leakage."
     ],
-    "evidence_of_completion": "Pending execution on isolated worktree feat/m2-playwright-e2e."
+    "evidence_of_completion": "Pending scheduling after M2-01 and M2-04."
   },
   "recovery_instructions": [
     "1. Verify repository is on branch 'dev/mission-002' (do not reset completed DONE tasks or 72H_CLOCK.json).",
     "2. Run `git status -sb` and preserve or inspect any listed uncommitted_changes before taking action.",
     "3. Run `.venv/bin/python -m legal_engine.cli clock` and `.venv/bin/python -m legal_engine.cli state` to reload live countdown and queue validation.",
     "4. Run `.venv/bin/pytest -v` and `.venv/bin/python -m legal_engine.cli security-check` to establish verified baseline health.",
-    "5. Resume execution directly from next_executable_task: M2-01 (Playwright headless Chromium E2E verification driving apps/command-center through evidence validation, Fact-vs-Conclusion verification, HITL SubmissionBlockedError lock, rejection loop, lawyer approval, MockAuthority receipt folio, and SHA-256 audit timeline integrity.)."
+    "5. Resume execution directly from next_executable_task: M2-02 (Structured OpenTelemetry span instrumentation across intake, documents, review, submissions, security, and api.py handlers.)."
   ]
 }
