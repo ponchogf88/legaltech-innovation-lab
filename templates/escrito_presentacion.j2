@@ -1,0 +1,46 @@
+{{ watermark }}
+
+================================================================================
+ESCRITO FORMAL DE PRESENTACIÓN Y PROMOCIÓN (BORRADOR SINTÉTICO)
+================================================================================
+
+AUTORIDAD: {{ authority_label }} ({{ matter.authority }})
+EXPEDIENTE SINTÉTICO: {{ matter.id }}
+MATERIA / TIPO: {{ matter.matter_type }}
+PROMOVENTE: {{ matter.client_name }}
+FECHA PROGRAMADA: {{ filing_date }}
+MARCA TEMPORAL DE GENERACIÓN (UTC): {{ generated_at }}
+
+C. TITULAR DE LA AUTORIDAD SIMULADA
+PRESENTE.
+
+{{ matter.client_name }}, señalando como entorno exclusivo de notificación la
+consola de pruebas sintéticas del presente laboratorio (sin domicilios ni datos
+personales reales), ante usted con el debido respeto expone:
+
+--------------------------------------------------------------------------------
+HECHOS
+--------------------------------------------------------------------------------
+{{ matter.facts }}
+
+--------------------------------------------------------------------------------
+RELACIÓN DE DOCUMENTAL SINTÉTICA ADJUNTA
+--------------------------------------------------------------------------------
+{% if documents_needed %}
+{% for doc_item in documents_needed %}
+  [Anexo {{ loop.index }}] {{ doc_item }}
+{% endfor %}
+{% else %}
+  [Sin anexos declarados]
+{% endif %}
+
+--------------------------------------------------------------------------------
+PUNTOS PETITORIOS
+--------------------------------------------------------------------------------
+ÚNICO. Se tenga por presentado este escrito en carácter estrictamente sintético,
+sujeto a validación y firma humana antes de cualquier despacho a pasarela simulada.
+
+PROTESTO LO NECESARIO (SIMULACIÓN TÉCNICA).
+FIRMA: [PENDIENTE DE VALIDACIÓN HUMANA]
+
+{{ watermark }}

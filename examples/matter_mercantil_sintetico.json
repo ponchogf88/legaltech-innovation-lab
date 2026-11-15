@@ -1,0 +1,13 @@
+{
+  "id": "EXP-SINT-2026-001",
+  "client_name": "Corporativo Alfa Sintético S.A. de C.V.",
+  "matter_type": "mercantil",
+  "authority": "tribunal-virtual",
+  "facts": "Expediente sintético EXP-SINT-2026-001: controversia mercantil simulada sobre cumplimiento de contrato ficticio de servicios tecnológicos entre entidades imaginarias, sujeta a aprobación humana antes del envío.",
+  "documents_needed": [
+    "Contrato marco de suministro sintético (anexo simulado)",
+    "Estado de cuenta demostrativo sin datos reales",
+    "Acreditación de personalidad jurídica ficticia"
+  ],
+  "filing_date": "2026-12-15"
+}

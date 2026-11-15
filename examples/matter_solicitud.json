@@ -1,0 +1,13 @@
+{
+  "id": "SOL-SINT-2026-001",
+  "client_name": "Inmobiliaria Horizonte Sintético S.A. de C.V.",
+  "matter_type": "solicitud",
+  "authority": "registro-publico",
+  "facts": "Caso demostrativo sintético: solicitud de constancia registral preventiva respecto del folio mercantil ficticio FM-SINT-9001 para validar la revisión humana obligatoria.",
+  "documents_needed": [
+    "Identificación oficial sintética del representante",
+    "Poder notarial de demostración (archivo ficticio)",
+    "Comprobante simulado de pago de derechos"
+  ],
+  "filing_date": "2026-12-10"
+}
