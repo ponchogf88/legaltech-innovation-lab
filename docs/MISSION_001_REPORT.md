@@ -63,7 +63,7 @@ flowchart LR
 
 ### Security Findings & Mitigations Resolved
 1. **SEC-01 (Quarantined Legacy Prototype):** Legacy folder `/Users/user/legal-case-command-center` contains real civil case data and local filesystem paths. Quarantined completely; automated regex & marker scanner (`security.py`) prevents accidental ingestion or commit.
-2. **SEC-02 (Synthetic RFC Compliance Caught by Guardrail):** Initial synthetic fixture used plausible RFC-shaped test codes (`CAS000101AAA` / `SBF000202BBB`) caught by `test_scan_repository_tree_is_clean_on_repo_root`. Remediated immediately to SAT official generic synthetic placeholders (`XAXX010101000` / `XEXX010101000`).
+2. **SEC-02 (Synthetic RFC Compliance Caught by Guardrail):** Initial synthetic fixture used custom RFC-shaped placeholder strings caught by `test_scan_repository_tree_is_clean_on_repo_root`. Remediated immediately to SAT official generic synthetic placeholders (`XAXX010101000` / `XEXX010101000`).
 3. **SEC-03 (CLI Governance Readiness Signature Integration):** Discovered and resolved parameter contract mismatch between `cli.py` and `security.evaluate_governance_readiness(agent_config)` plus added `__main__` guard to `cli.py`.
 4. **SEC-04 (Symlink Ignore Hardening):** Updated `.gitignore` to ignore both `node_modules` and `node_modules/` so local dependency links are never staged.
 
