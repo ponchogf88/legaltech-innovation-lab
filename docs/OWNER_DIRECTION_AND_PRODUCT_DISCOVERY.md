@@ -99,3 +99,9 @@ Observed directly in the MacBook working copy during the continuity review:
 4. Draft a modular product map (core platform, legal workflow modules, agent services, integrations, billing, analytics, and admin/security).
 5. Keep all proposals marked as proposals until the owner confirms them.
 6. Reconcile project state/checkpoint metadata before resuming implementation from M2-02.
+
+## 9. GitHub synchronization status
+
+- Private repository created: `https://github.com/ponchogf88/legaltech-innovation-lab`.
+- Local `origin` is configured to that repository.
+- Initial push is pending: GitHub rejected the push because the current GitHub CLI OAuth authorization does not include the `workflow` scope needed to publish the existing CI workflow file. The repository exists, but do not claim its branches are synchronized until a successful push and remote ref verification are recorded.
