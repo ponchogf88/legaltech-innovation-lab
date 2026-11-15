@@ -30,3 +30,13 @@
 | **`M1-E2`** | Cross-verification of repository security scan (`security-check`), SAT generic RFC placeholders, and CLI entrypoint parity. | `P0` | `M1-E1` | `Argon + Hydrogen` | **`DONE`** | `python -m legal_engine.cli security-check` clean (`scan_clean: true`, `governance_ready: true`). | Commits `8ff5bb0`, `8d3ad92` |
 | **`M1-E3`** | Mission 001 engineering deployment and security verification report (`docs/MISSION_001_REPORT.md`). | `P0` | `M1-E2` | `Argon` | **`DONE`** | Comprehensive accuracy-checked Mission 001 report committed and passing `security-check`. | Commits `2219551`, `8d3ad92` |
 | **`M1-MAIN-MERGE`** | Owner review and authorization to merge verified `dev/*` deliverables into `main` (`119c13d`). | `P1` | `M1-E3` | `Project Owner + Argon` | **`BLOCKED`** | Explicit owner authorization granted for `main` fast-forward/merge. | Pending Owner Approval (Blocker `B-02`; `main` untouched at `119c13d`) |
+
+
+## Owner Product Discovery — Planning Queue (non-implementation)
+
+| Task ID | Description | Priority | Dependencies | Owner | Status | Acceptance Criteria |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`PD-01`** | Confirm the complete nine-application startup shortlist and identify the exact “Cloud” product. | `P0` | Owner supplies remaining names | Owner + Product | **`OPEN`** | All nine names and intended roles explicitly confirmed; no inferred vendors. |
+| **`PD-02`** | Evaluate Excalidraw, Remotion, Mercado Pago, Stripe, and Speakeasy against product workflows, integration fit, security, regional availability, cost, and overlap. | `P1` | `PD-01` | Product + Engineering | **`OPEN`** | Evidence-based capability matrix with keep / defer / reject recommendations. |
+| **`PD-03`** | Define modular startup product map and distinguish core platform, legal modules, agent services, and external integrations. | `P1` | `PD-01` | Product + Architecture | **`OPEN`** | Versioned module map; proposals clearly separated from owner-approved decisions. |
+| **`PD-04`** | Reconcile `PROJECT_STATE.json` and `CHECKPOINT.json` with the actual `dev/mission-002` history before resuming engineering. | `P1` | Current continuity review | Hydrogen-Continuity + Argon | **`OPEN`** | State/checkpoint references consistent with current branch history; immutable 72-hour start unchanged. |

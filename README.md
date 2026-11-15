@@ -133,3 +133,8 @@ cd apps/command-center && npm run build
 ## License
 
 Released under the [MIT License](LICENSE).
+
+
+## Owner Direction & Product Discovery
+
+- **[docs/OWNER_DIRECTION_AND_PRODUCT_DISCOVERY.md](docs/OWNER_DIRECTION_AND_PRODUCT_DISCOVERY.md)** — Confirmed owner direction, the two parallel business tracks, design principles, preliminary nine-tool shortlist (with unresolved items clearly marked), legal/safety boundaries, repository lineage, and next discovery actions.
