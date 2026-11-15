@@ -1,0 +1,47 @@
+{{ watermark }}
+
+================================================================================
+SOLICITUD GENERAL ADMINISTRATIVA / REGISTRAL (BORRADOR SINTÉTICO)
+================================================================================
+
+ASUNTO: {{ matter.matter_type | upper }} — SOLICITUD DE TRÁMITE
+REFERENCIA SINTÉTICA: {{ matter.id }}
+AUTORIDAD DESTINATARIA: {{ authority_label }} [clave: {{ matter.authority }}]
+FECHA OBJETIVO DE PRESENTACIÓN: {{ filing_date }}
+GENERADO (UTC): {{ generated_at }}
+
+--------------------------------------------------------------------------------
+I. PROMOVENTE / SOLICITANTE (DATOS 100% FICTICIOS)
+--------------------------------------------------------------------------------
+{{ matter.client_name }}, por conducto de su representante ficticio debidamente
+acreditado únicamente para efectos de demostración técnica, comparece ante esa
+autoridad simulada para formular la presente solicitud general.
+
+--------------------------------------------------------------------------------
+II. HECHOS Y ANTECEDENTES
+--------------------------------------------------------------------------------
+{{ matter.facts }}
+
+--------------------------------------------------------------------------------
+III. DOCUMENTOS Y ANEXOS REQUERIDOS
+--------------------------------------------------------------------------------
+{% if documents_needed %}
+{% for doc_item in documents_needed %}
+  {{ loop.index }}. {{ doc_item }}
+{% endfor %}
+{% else %}
+  - Sin anexos declarados en esta solicitud sintética.
+{% endif %}
+
+--------------------------------------------------------------------------------
+IV. PETITORIOS
+--------------------------------------------------------------------------------
+PRIMERO. Tener por presentada esta solicitud sintética con referencia {{ matter.id }}
+para validación exclusivamente dentro del laboratorio de flujo humano-en-el-bucle.
+
+SEGUNDO. Acusar recibo mediante el adaptador simulado correspondiente, previa
+aprobación expresa de una persona revisora habilitada.
+
+[PENDIENTE DE REVISIÓN Y APROBACIÓN HUMANA — SIN VALIDEZ JURÍDICA REAL]
+
+{{ watermark }}
