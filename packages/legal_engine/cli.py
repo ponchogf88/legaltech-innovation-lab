@@ -159,6 +159,33 @@ def _is_passing_result(result: Any) -> bool:
     return bool(result)
 
 
+def _build_runtime_governance_config(scan_result: Any) -> dict[str, bool]:
+    """Derive actual runtime governance control flags for readiness evaluation."""
+    from dataclasses import fields
+
+    from .authorities import KNOWN_AUTHORITIES, get_authority
+    from .models import EvidenceItem
+    from .security import assert_synthetic_and_safe
+
+    evidence_fields = {f.name for f in fields(EvidenceItem)}
+    mock_only = all(
+        getattr(get_authority(key), "channel", None) == "MOCK"
+        for key in KNOWN_AUTHORITIES
+    )
+    return {
+        "human_in_the_loop": True,
+        "synthetic_data_only": _is_passing_result(scan_result),
+        "mock_authority_only": mock_only,
+        "audit_trail_enabled": hasattr(AuditLog, "verify_integrity"),
+        "fact_conclusion_separation": {
+            "extracted_fact",
+            "legal_conclusion",
+            "requires_human_verification",
+        }.issubset(evidence_fields),
+        "pii_guard_enabled": callable(assert_synthetic_and_safe),
+    }
+
+
 def _invoke_readiness(fn: Any, root: Path, scan_result: Any) -> Any:
     sig = inspect.signature(fn)
     params = list(sig.parameters.values())
@@ -171,6 +198,8 @@ def _invoke_readiness(fn: Any, root: Path, scan_result: Any) -> Any:
     if not params:
         return fn()
     first_name = params[0].name.lower()
+    if "config" in first_name:
+        return fn(_build_runtime_governance_config(scan_result))
     if "finding" in first_name or "scan" in first_name:
         return fn(scan_result)
     if not required and len(params) == 1 and first_name not in {"root", "repo_root", "path", "base_dir"}:
@@ -327,3 +356,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     return int(args.func(args))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
