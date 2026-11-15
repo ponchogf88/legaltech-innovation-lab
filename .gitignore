@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# Local databases and runtime logs
+*.db
+*.sqlite
+*.sqlite3
+*.jsonl
+
+# Secrets and local config — never commit real credentials or client data
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cer
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+
+# macOS / IDE
+.DS_Store
