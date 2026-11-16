@@ -117,3 +117,26 @@ apps/command-center/
 1. **Paquete "Forense & Litigio" (Cicerón + Ulpiano + Temis):** $1,490 MXN / mes. Ideal para despachos civilistas y mercantilistas.
 2. **Paquete "Estrategia & Choque" (Sun Tzu + Julio César + Maquiavelo):** $1,890 MXN / mes. Para despachos corporativos y de cobranza judicial agresiva.
 3. **Pase "El Consejo Imperial" (Todos los Agentes Ilimitados):** $3,200 MXN / mes para firmas medianas y grandes.
+
+
+---
+
+## 5. Módulo de Agentes Auxiliares de Operación y Negocio (Add-ons Opcionales)
+
+Estos agentes no son de litigio directo en estrado, sino del **soporte administrativo, financiero y operativo** del despacho. Se contratan o activan solo si el abogado lo requiere:
+
+### 1. Fray Luca Pacioli (El Contador & Fiscalista del Despacho)
+* **Función:** Facturación electrónica (CFDI 4.0), timbrado automático de honorarios, cálculo de liquidaciones judiciales (intereses moratorios, capital e IVA) y conciliación de cuentas.
+* **Activación:** Solo si el despacho factura desde la app. Si el abogado ya tiene contador externo, lo desactiva.
+
+### 2. Hermes (El Actuario & Monitor de Boletines Judiciales)
+* **Función:** Rastreo 24/7 de listas y acuerdos en boletines judiciales (PJENL, CJF, Tribunales Locales). Cómputo exacto de términos procesales en días hábiles.
+* **Activación:** Alerta preventiva por WhatsApp cuando sale publicado un acuerdo.
+
+### 3. Marco Licinio Craso (Cobranza de Honorarios & Flujo de Caja)
+* **Función:** Cobranza automatizada de igualas mensuales a clientes del despacho. Envío de recordatorios diplomáticos pero firmes, links de pago y estados de cuenta.
+* **Activación:** Módulo de cartera vencida y suscripciones de clientes.
+
+### 4. Sherlock (Investigador Forense & Búsqueda Registral)
+* **Función:** Rastreo de bienes embargables: Registro Público de la Propiedad (RPP), folio mercantil, vehículos y cruce de datos patrimoniales del deudor.
+* **Activación:** Se contrata por evento cuando se prepara un embargo con Julio César.
