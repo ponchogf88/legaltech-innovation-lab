@@ -17,8 +17,8 @@
   ],
   "active_blockers": [],
   "latest_test_results": {
-    "pytest_total": 68,
-    "pytest_passed": 68,
+    "pytest_total": 70,
+    "pytest_passed": 70,
     "pytest_failed": 0,
     "playwright_e2e_checks_passed": 6,
     "playwright_e2e_receipt_folio": "MOCK-TV-EXP-SINT-2026-001-001",
@@ -182,7 +182,19 @@
       "acceptance_criteria": [
         "15 archivos Dell importados en docs/dell_lab_sync y workflows/n8n; test_notifier_and_handoff.py pasando (68/68 total); CI workflow reubicado en ops/ci/ci-quality-security.yml; push limpio a GitHub."
       ],
-      "evidence_of_completion": "Integrated on dev/mission-002 + main; 68/68 pytest, security-check clean 6/6, PING-MAC-TO-DELL-001 listo en GitHub."
+      "evidence_of_completion": "Integrated on dev/mission-002 + main (d9afe2b); 68/68 pytest, security-check clean 6/6, PING-MAC-TO-DELL-001 listo en GitHub."
+    },
+    {
+      "task_id": "M2-08",
+      "description": "Módulo de Citas UAPA, Comparecencias y Billetes de Depósito en Pensión Alimenticia + Manual Oficial Normativo e Informático del Tribunal Virtual PJENL (UMC, Oficios Electrónicos, Cabinas Virtuales, WhatsApp 81-8366-6781).",
+      "priority": "P0",
+      "dependencies": ["M2-07"],
+      "assigned_agent": "Argon + Hydrogen",
+      "status": "DONE",
+      "acceptance_criteria": [
+        "docs/MANUAL_TRIBUNAL_VIRTUAL_PJENL_Y_BILLETES_DEPOSITO.md, packages/legal_engine/alimony.py, templates/solicitud_entrega_billete_deposito.j2, examples/matter_alimentos_billete_sintetico.json y tests/test_alimony_deposit_workflow.py pasan pytest (70/70) y security-check (6/6)."
+      ],
+      "evidence_of_completion": "Verified in tests/test_alimony_deposit_workflow.py (70/70 passed), security-check clean 6/6, and pushed to GitHub main + dev/mission-002."
     },
     {
       "task_id": "M2-02",

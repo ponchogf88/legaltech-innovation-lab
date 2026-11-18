@@ -13,6 +13,15 @@ from .academy import (
     summarize_lawyer_academy,
     validate_legal_course,
 )
+from .alimony import (
+    APPOINTMENT_CHANNELS,
+    DEPOSIT_STAGES,
+    PJENL_OFFICIAL_CHANNELS,
+    AlimonyDepositError,
+    AlimonyDepositRecord,
+    create_alimony_deposit_record,
+    schedule_uapa_deposit_appointment,
+)
 from .api import create_server, handle_api_request, run_server
 from .audit import AuditLog
 from .authorities import (
@@ -82,8 +91,11 @@ __all__ = [
     "__version__",
     "ALLOWED_TRANSITIONS",
     "ALERT_LEVELS",
+    "APPOINTMENT_CHANNELS",
     "AcademyValidationError",
     "AlertNotification",
+    "AlimonyDepositError",
+    "AlimonyDepositRecord",
     "AuditLog",
     "AuthorityAdapter",
     "CHECKPOINT_FILENAME",
@@ -97,6 +109,7 @@ __all__ = [
     "CourseReminder",
     "DEFAULT_DEADLINE_RULES",
     "DEFAULT_TEMPLATES_DIR",
+    "DEPOSIT_STAGES",
     "Deadline",
     "Document",
     "DocumentRenderError",
@@ -111,6 +124,7 @@ __all__ = [
     "Matter",
     "MockAuthority",
     "NotificationError",
+    "PJENL_OFFICIAL_CHANNELS",
     "REQUIRED_TASK_FIELDS",
     "Receipt",
     "ReviewError",
@@ -130,6 +144,7 @@ __all__ = [
     "compute_clock_status",
     "compute_course_reminders",
     "compute_deadlines",
+    "create_alimony_deposit_record",
     "create_server",
     "dispatch_alert",
     "format_alert_email_body",
@@ -149,6 +164,7 @@ __all__ = [
     "route_legal_task",
     "run_server",
     "save_checkpoint",
+    "schedule_uapa_deposit_appointment",
     "submit",
     "summarize_lawyer_academy",
     "transition",

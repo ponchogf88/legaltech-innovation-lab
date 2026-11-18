@@ -1,0 +1,14 @@
+{
+  "id": "ORAL-ALIM-SINT-2026-001",
+  "client_name": "Elena Sofía Ejemplo Morales (Acreedora Sintética)",
+  "matter_type": "alimentos-billete-deposito",
+  "authority": "tribunal-virtual",
+  "facts": "Caso demostrativo sintético de juicio oral de pensión alimenticia: se solicita entrega del billete de depósito ficticio BD-SINT-8840 por $12,500.00 MXN consignado ante juzgado familiar virtual, gestionando cita en UAPA (Tribunal Virtual o WhatsApp 81-8366-6781) para levantar comparecencia presencial de la acreedora en Palacio de Justicia y trámite subsecuente en Tesorería para abono a cuenta.",
+  "documents_needed": [
+    "Identificación oficial vigente sintética (INE) de la acreedora alimentaria",
+    "Copia simple del acuerdo que tiene por exhibido el billete BD-SINT-8840",
+    "Acuse de cita agendada ante UAPA / Juzgado Oral Familiar",
+    "Carátula bancaria de cuenta destino para abono en Tesorería (sin CLABE real en sandbox)"
+  ],
+  "filing_date": "2026-11-25"
+}

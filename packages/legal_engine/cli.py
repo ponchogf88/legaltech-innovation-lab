@@ -29,7 +29,7 @@ from .continuity import (
     write_node_handshake,
 )
 from .deadlines import compute_deadlines
-from .documents import render_document
+from .documents import TEMPLATES, render_document
 from .intake import intake_matter
 from .models import Submission, SubmissionState
 from .notifier import ALERT_LEVELS, build_alert_notification, dispatch_alert
@@ -422,7 +422,7 @@ def build_parser() -> argparse.ArgumentParser:
     demo_parser.add_argument(
         "--template",
         default="solicitud_general",
-        choices=["solicitud_general", "escrito_presentacion"],
+        choices=sorted(TEMPLATES),
         help="Template key used to render the draft document.",
     )
     demo_parser.add_argument(

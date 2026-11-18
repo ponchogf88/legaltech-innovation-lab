@@ -1,0 +1,51 @@
+{{ watermark }}
+
+================================================================================
+SOLICITUD DE ENTREGA DE BILLETE DE DEPÓSITO Y GESTIÓN DE CITA (UAPA / JUZGADO)
+JUICIO ORAL DE PENSIÓN ALIMENTICIA — BORRADOR SINTÉTICO
+================================================================================
+
+ASUNTO: {{ matter.matter_type | upper }} — ENTREGA DE BILLETE DE DEPÓSITO Y CITA PARA COMPARECENCIA
+REFERENCIA SINTÉTICA: {{ matter.id }}
+AUTORIDAD DESTINATARIA: {{ authority_label }} [clave: {{ matter.authority }}]
+FECHA OBJETIVO DE PRESENTACIÓN: {{ filing_date }}
+GENERADO (UTC): {{ generated_at }}
+
+--------------------------------------------------------------------------------
+I. ACREEDORA ALIMENTARIA / PROMOVENTE (DATOS 100% FICTICIOS)
+--------------------------------------------------------------------------------
+{{ matter.client_name }}, por propio derecho y en representación autorizada únicamente
+para efectos de demostración técnica en el laboratorio LegalTech Innovation Lab,
+comparece respetuosamente a solicitar la entrega del billete/certificado de
+depósito consignado por concepto de pensión alimenticia.
+
+--------------------------------------------------------------------------------
+II. HECHOS Y CONSIGNACIÓN REGISTRADA
+--------------------------------------------------------------------------------
+{{ matter.facts }}
+
+--------------------------------------------------------------------------------
+III. REQUISITOS PARA COMPARECENCIA Y CITA UAPA
+--------------------------------------------------------------------------------
+{% if documents_needed %}
+{% for doc_item in documents_needed %}
+  {{ loop.index }}. {{ doc_item }}
+{% endfor %}
+{% else %}
+  - Sin anexos declarados en este borrador sintético.
+{% endif %}
+
+--------------------------------------------------------------------------------
+IV. PETITORIOS
+--------------------------------------------------------------------------------
+PRIMERO. Tener por formulada la solicitud de entrega y, en su caso, endoso del
+billete de depósito descrito en autos, por tratarse de alimentos de orden público.
+
+SEGUNDO. Instruir el agendamiento de cita ante la Unidad de Asistencia Procesal y
+Administrativa (UAPA) / ventanilla judicial correspondiente para levantar la
+comparecencia formal de entrega a favor de {{ matter.client_name }} y canalizar
+su posterior cobro o depósito en cuenta ante Tesorería.
+
+[PENDIENTE DE REVISIÓN Y APROBACIÓN HUMANA — SIN VALIDEZ JURÍDICA REAL]
+
+{{ watermark }}

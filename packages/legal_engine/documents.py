@@ -16,6 +16,7 @@ DEFAULT_TEMPLATES_DIR = Path(__file__).resolve().parents[2] / "templates"
 TEMPLATES: dict[str, str] = {
     "solicitud_general": "solicitud_general.j2",
     "escrito_presentacion": "escrito_presentacion.j2",
+    "solicitud_entrega_billete_deposito": "solicitud_entrega_billete_deposito.j2",
 }
 
 
