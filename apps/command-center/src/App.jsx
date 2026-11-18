@@ -110,10 +110,22 @@ export default function App() {
     try {
       const response = await fetch('/api/health', { method: 'GET' });
       if (response.ok) {
+        let sseDetail = 'Sincronización opcional activa con backend local.';
+        try {
+          const sseResponse = await fetch('/api/events/stream', {
+            method: 'GET',
+            headers: { Accept: 'text/event-stream' },
+          });
+          if (sseResponse.ok) {
+            sseDetail = 'Sincronización SSE y API :8790 activas en modo sintético.';
+          }
+        } catch {
+          // Optional SSE stream check; keep API health connected
+        }
         setApiSyncStatus({
           mode: 'connected',
           label: 'API :8790 Conectada',
-          detail: 'Sincronización opcional activa con backend local.',
+          detail: sseDetail,
         });
       } else {
         setApiSyncStatus({

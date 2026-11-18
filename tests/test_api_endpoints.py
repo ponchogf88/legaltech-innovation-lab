@@ -138,3 +138,48 @@ def test_live_http_server_health_and_overview(tmp_path: Path) -> None:
         server.server_close()
         repo.close()
         thread.join(timeout=2)
+
+
+def test_api_sse_events_stream_and_live_http(tmp_path: Path) -> None:
+    """Verify SSE frame generation via dispatcher and text/event-stream HTTP delivery."""
+    repo = SQLiteRepository(":memory:")
+    queue = ReviewQueue()
+    audit = AuditLog(tmp_path / "sse-audit.jsonl")
+
+    try:
+        status, sse_payload = handle_api_request("GET", "/api/events/stream", None, repo, queue, audit)
+        assert status == 200
+        assert sse_payload["event"] == "state_snapshot"
+        assert sse_payload["stream_format"] == "text/event-stream"
+        assert "event: state_snapshot\n" in sse_payload["sse_frame"]
+        assert "data: " in sse_payload["sse_frame"]
+        assert sse_payload["data"]["audit_valid"] is True
+    finally:
+        repo.close()
+
+    server, live_repo = create_server(
+        host="127.0.0.1",
+        port=0,
+        db_path=tmp_path / "sse_server.db",
+        audit_path=tmp_path / "sse_server.audit.jsonl",
+    )
+    port = server.server_address[1]
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/events/stream", timeout=5) as resp:
+            assert resp.status == 200
+            content_type = resp.headers.get("Content-Type", "")
+            assert content_type.startswith("text/event-stream")
+            raw_text = resp.read().decode("utf-8")
+            assert "event: state_snapshot\n" in raw_text
+            data_lines = [line for line in raw_text.splitlines() if line.startswith("data: ")]
+            assert len(data_lines) == 1
+            parsed = json.loads(data_lines[0][len("data: ") :])
+            assert parsed["audit_valid"] is True
+            assert "latest_audit_hash" in parsed
+    finally:
+        server.shutdown()
+        server.server_close()
+        live_repo.close()
+        thread.join(timeout=2)

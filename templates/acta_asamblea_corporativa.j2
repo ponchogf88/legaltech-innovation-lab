@@ -1,0 +1,50 @@
+{{ watermark }}
+
+================================================================================
+ACTA DE ASAMBLEA GENERAL ORDINARIA DE ACCIONISTAS — BORRADOR SINTÉTICO
+GOBIERNO CORPORATIVO Y PROTOCOLIZACIÓN REGISTRAL
+================================================================================
+
+ASUNTO: {{ matter.matter_type | upper }} — ACTA DE ASAMBLEA CORPORATIVA
+REFERENCIA SINTÉTICA: {{ matter.id }}
+AUTORIDAD REGISTRAL DESTINATARIA: {{ authority_label }} [clave: {{ matter.authority }}]
+FECHA OBJETIVO DE PRESENTACIÓN / PROTOCOLIZACIÓN: {{ filing_date }}
+GENERADO (UTC): {{ generated_at }}
+
+--------------------------------------------------------------------------------
+I. SOCIEDAD CONVOCANTE Y COMPARECIENTES (DATOS 100% FICTICIOS)
+--------------------------------------------------------------------------------
+En representación de {{ matter.client_name }}, dentro del entorno exclusivo de
+demostración técnica de LegalTech Innovation Lab (sin personas físicas o morales
+reales), se hace constar la celebración de Asamblea General Ordinaria de Accionistas
+con quórum legal sintético verificado.
+
+--------------------------------------------------------------------------------
+II. QUÓRUM, ORDEN DEL DÍA Y ACUERDOS SINTÉTICOS
+--------------------------------------------------------------------------------
+{{ matter.facts }}
+
+--------------------------------------------------------------------------------
+III. ANEXOS CORPORATIVOS Y SOPORTE DOCUMENTAL
+--------------------------------------------------------------------------------
+{% if documents_needed %}
+{% for doc_item in documents_needed %}
+  {{ loop.index }}. {{ doc_item }}
+{% endfor %}
+{% else %}
+  - Sin anexos corporativos declarados en este borrador sintético.
+{% endif %}
+
+--------------------------------------------------------------------------------
+IV. DESIGNACIÓN DE DELEGADO ESPECIAL Y PETITORIOS REGISTRALES
+--------------------------------------------------------------------------------
+PRIMERO. Se aprueba en todos sus términos el Orden del Día sintético asentado en
+el presente proyecto de acta con referencia {{ matter.id }}.
+
+SEGUNDO. Se designa Delegado Especial ficticio para acudir ante Fedatario Público
+y gestionar la inscripción del testimonio resultante ante {{ authority_label }},
+previa revisión y firma humana obligatoria en la compuerta del sistema.
+
+[PENDIENTE DE REVISIÓN Y APROBACIÓN HUMANA — SIN VALIDEZ JURÍDICA REAL]
+
+{{ watermark }}

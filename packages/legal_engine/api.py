@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
@@ -20,6 +21,7 @@ from .models import Submission, SubmissionState
 from .review import ReviewError, ReviewQueue
 from .storage import SQLiteRepository
 from .submissions import SubmissionBlockedError, submit
+from .telemetry import trace_span
 
 try:
     from .security import SecurityViolationError
@@ -32,6 +34,17 @@ except ImportError:  # pragma: no cover - optional prior to Workstream C merge
 _SUBMISSION_ACTION_RE = re.compile(r"^/api/submissions/([^/]+)/(review|approve|reject|submit)$")
 
 
+def format_sse_event(event: str, data: dict[str, Any], event_id: str | None = None) -> str:
+    """Format a Server-Sent Events (SSE) payload frame following RFC 8895 wire rules."""
+    lines: list[str] = []
+    if event_id is not None:
+        lines.append(f"id: {event_id}")
+    lines.append(f"event: {event}")
+    encoded = json.dumps(data, ensure_ascii=False)
+    lines.append(f"data: {encoded}")
+    return "\n".join(lines) + "\n\n"
+
+
 def handle_api_request(
     method: str,
     path: str,
@@ -40,12 +53,61 @@ def handle_api_request(
     queue: ReviewQueue,
     audit: AuditLog | None = None,
 ) -> tuple[int, dict[str, Any]]:
-    """Dispatch an API request cleanly without requiring a live socket."""
+    """Dispatch an API request cleanly inside an OpenTelemetry trace span."""
     clean_method = method.upper().strip()
     clean_path = urlparse(path).path.rstrip("/") or "/"
+    with trace_span(
+        f"api.{clean_method}:{clean_path}",
+        {"http.method": clean_method, "http.path": clean_path},
+    ) as span_ctx:
+        status_code, response_body = _dispatch_api_request(
+            clean_method=clean_method,
+            clean_path=clean_path,
+            payload=payload,
+            repo=repo,
+            queue=queue,
+            audit=audit,
+        )
+        span_ctx["attributes"]["http.status_code"] = status_code
+        return (status_code, response_body)
 
+
+def _dispatch_api_request(
+    clean_method: str,
+    clean_path: str,
+    payload: dict[str, Any] | None,
+    repo: SQLiteRepository,
+    queue: ReviewQueue,
+    audit: AuditLog | None = None,
+) -> tuple[int, dict[str, Any]]:
     if clean_method == "GET" and clean_path == "/api/health":
         return (200, {"ok": True, "service": "legal-engine", "mode": "synthetic-only"})
+
+    if clean_method == "GET" and clean_path == "/api/events/stream":
+        matters = [item.to_dict() for item in repo.list_matters()]
+        submissions = [item.to_dict() for item in repo.list_submissions()]
+        entries = audit.read_entries() if audit is not None else []
+        audit_valid = audit.verify_integrity() if audit is not None else True
+        latest_hash = str(entries[-1].get("entry_hash", "GENESIS")) if entries else "GENESIS"
+        snapshot_data = {
+            "matters_count": len(matters),
+            "submissions_count": len(submissions),
+            "submissions": submissions,
+            "audit_entries_count": len(entries),
+            "audit_valid": audit_valid,
+            "latest_audit_hash": latest_hash,
+        }
+        event_id = str(len(entries) if entries else 1)
+        return (
+            200,
+            {
+                "event": "state_snapshot",
+                "stream_format": "text/event-stream",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "data": snapshot_data,
+                "sse_frame": format_sse_event("state_snapshot", snapshot_data, event_id=event_id),
+            },
+        )
 
     if clean_method == "GET" and clean_path == "/api/overview":
         matters = [item.to_dict() for item in repo.list_matters()]
@@ -292,7 +354,18 @@ def _make_handler(
             self.end_headers()
 
         def do_GET(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler naming
+            clean_path = urlparse(self.path).path.rstrip("/") or "/"
             status, body = handle_api_request("GET", self.path, None, repo, queue, audit)
+            if clean_path == "/api/events/stream" and status == 200:
+                raw = str(body.get("sse_frame", "")).encode("utf-8")
+                self.send_response(status)
+                self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+                self.send_header("Cache-Control", "no-cache")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Content-Length", str(len(raw)))
+                self.end_headers()
+                self.wfile.write(raw)
+                return
             self._send_json(status, body)
 
         def do_POST(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler naming

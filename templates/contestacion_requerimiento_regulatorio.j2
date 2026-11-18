@@ -1,0 +1,47 @@
+{{ watermark }}
+
+================================================================================
+CONTESTACIÓN A REQUERIMIENTO DE CUMPLIMIENTO REGULATORIO Y FISCAL — BORRADOR SINTÉTICO
+================================================================================
+
+ASUNTO: {{ matter.matter_type | upper }} — DESAHOGO DE REQUERIMIENTO ADMINISTRATIVO
+REFERENCIA SINTÉTICA: {{ matter.id }}
+AUTORIDAD EMISORA DESTINATARIA: {{ authority_label }} [clave: {{ matter.authority }}]
+FECHA LÍMITE / PRESENTACIÓN: {{ filing_date }}
+GENERADO (UTC): {{ generated_at }}
+
+--------------------------------------------------------------------------------
+I. CONTRIBUYENTE / ENTIDAD REGULADA (DATOS 100% FICTICIOS)
+--------------------------------------------------------------------------------
+{{ matter.client_name }}, compareciendo exclusivamente dentro del laboratorio de
+simulación sintética LegalTech Innovation Lab, formula el presente escrito de
+desahogo oportuno respecto del requerimiento regulatorio identificado en los hechos.
+
+--------------------------------------------------------------------------------
+II. ANTECEDENTES, FUNDAMENTO Y DESAHOGO PUNTUAL
+--------------------------------------------------------------------------------
+{{ matter.facts }}
+
+--------------------------------------------------------------------------------
+III. DOCUMENTACIÓN Y PAPELES DE TRABAJO ANEXOS (SINTÉTICOS)
+--------------------------------------------------------------------------------
+{% if documents_needed %}
+{% for doc_item in documents_needed %}
+  {{ loop.index }}. {{ doc_item }}
+{% endfor %}
+{% else %}
+  - Sin anexos declarados en este desahogo sintético.
+{% endif %}
+
+--------------------------------------------------------------------------------
+IV. PUNTOS PETITORIOS
+--------------------------------------------------------------------------------
+PRIMERO. Tener por presentado en tiempo y forma el presente escrito de cumplimiento
+correspondiente al expediente sintético {{ matter.id }} ante {{ authority_label }}.
+
+SEGUNDO. Tener por desahogado el requerimiento simulado con base en los papeles de
+trabajo adjuntos, previa validación humana obligatoria de la persona revisora.
+
+[PENDIENTE DE REVISIÓN Y APROBACIÓN HUMANA — SIN VALIDEZ JURÍDICA REAL]
+
+{{ watermark }}

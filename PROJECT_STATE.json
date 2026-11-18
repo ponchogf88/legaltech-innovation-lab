@@ -3,9 +3,9 @@
   "project": "legaltech-innovation-lab",
   "protocol": "LEGALTECH-CONTINUOUS-ENGINEERING-PROTOCOL",
   "current_branch": "dev/mission-002",
-  "head_commit": "2aaa64a67fb3c02bbdfbfa7738ee4ab7d39d938a",
-  "main_branch_commit": "119c13d24e1b0247dab9a96d3044105b148d7b58",
-  "active_mission": "MISSION 002",
+  "head_commit": "7c5b5e83c2fa75c407b1725d6e33e012364ab722",
+  "main_branch_commit": "7c5b5e83c2fa75c407b1725d6e33e012364ab722",
+  "active_mission": "MISSION 002 (17/17 DONE)",
   "completed_missions": [
     {
       "mission_id": "MISSION 001",
@@ -17,8 +17,8 @@
   ],
   "active_blockers": [],
   "latest_test_results": {
-    "pytest_total": 70,
-    "pytest_passed": 70,
+    "pytest_total": 75,
+    "pytest_passed": 75,
     "pytest_failed": 0,
     "playwright_e2e_checks_passed": 6,
     "playwright_e2e_receipt_folio": "MOCK-TV-EXP-SINT-2026-001-001",
@@ -26,7 +26,7 @@
     "governance_ready": true,
     "vite_build_passed": true
   },
-  "next_executable_task": "M2-02",
+  "next_executable_task": null,
   "tasks": [
     {
       "task_id": "M1-A1",
@@ -198,27 +198,27 @@
     },
     {
       "task_id": "M2-02",
-      "description": "Structured OpenTelemetry span instrumentation across intake, documents, review, submissions, security, and api.py handlers.",
+      "description": "Structured OpenTelemetry span instrumentation across telemetry.py and api.py handlers.",
       "priority": "P1",
       "dependencies": ["M2-01", "M2-04"],
       "assigned_agent": "Hydrogen-Telemetry",
-      "status": "BACKLOG",
+      "status": "DONE",
       "acceptance_criteria": [
         "OTel-compatible span hooks emit structured timing/state attributes with zero live PII leakage."
       ],
-      "evidence_of_completion": "Pending scheduling after M2-01 and M2-04."
+      "evidence_of_completion": "packages/legal_engine/telemetry.py, api.py trace_span integration, and tests/test_telemetry_spans.py (W3C traceparent, parent-child nesting, PII block) verified inside 75/75 pytest."
     },
     {
       "task_id": "M2-03",
-      "description": "Real-time Server-Sent Events (SSE) bridge in api.py streaming ReviewQueue transitions and AuditLog entries to Command Center UI.",
+      "description": "Real-time Server-Sent Events (SSE) bridge in api.py streaming state snapshots and AuditLog entries to Command Center UI.",
       "priority": "P1",
       "dependencies": ["M2-01"],
       "assigned_agent": "Hydrogen-SSE",
-      "status": "BACKLOG",
+      "status": "DONE",
       "acceptance_criteria": [
         "Command Center receives live SSE state updates from local api.py with clean local-sandbox fallback."
       ],
-      "evidence_of_completion": "Pending scheduling after M2-01."
+      "evidence_of_completion": "GET /api/events/stream (format_sse_event + text/event-stream handler) in api.py, App.jsx SSE probe with Sandbox Local fallback, and tests/test_api_endpoints.py live HTTP SSE check passing (75/75 pytest)."
     },
     {
       "task_id": "M2-05",
@@ -226,11 +226,11 @@
       "priority": "P2",
       "dependencies": ["M2-01"],
       "assigned_agent": "Hydrogen-Templates",
-      "status": "BACKLOG",
+      "status": "DONE",
       "acceptance_criteria": [
         "New synthetic Jinja2 templates and example fixtures pass security-check and rendering tests."
       ],
-      "evidence_of_completion": "Pending scheduling after M2-01 and M2-02/M2-03."
+      "evidence_of_completion": "templates/acta_asamblea_corporativa.j2, templates/contestacion_requerimiento_regulatorio.j2, examples/matter_gobierno_corporativo_sintetico.json (CORP-SINT-2026-001), examples/matter_cumplimiento_regulatorio_sintetico.json (REG-SINT-2026-001), and tests/test_domain_expansion_packs.py passing inside 75/75 pytest + security-check 6/6."
     }
   ]
 }

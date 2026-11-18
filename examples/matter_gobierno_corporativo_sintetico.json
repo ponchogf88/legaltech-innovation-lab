@@ -1,0 +1,14 @@
+{
+  "id": "CORP-SINT-2026-001",
+  "client_name": "Desarrollos Industriales Mirador Sintético S.A. de C.V.",
+  "matter_type": "mercantil",
+  "authority": "registro-publico",
+  "facts": "Proyecto sintético de Asamblea General Ordinaria de Accionistas (quórum ficticio del 100% del capital social suscrito): (1) Aprobación del informe anual ficticio de administración del ejercicio 2026; (2) Designación de Delegado Especial sintético para protocolizar el acta e inscribirla bajo el folio mercantil ficticio FM-SINT-2026-4410 en Nuevo León (Entorno Sintético).",
+  "documents_needed": [
+    "Lista de asistencia sintética firmada por escrutador designado",
+    "Registro ficticio de acciones nominativas de la sociedad",
+    "Informe financiero demostrativo del ejercicio fiscal 2026",
+    "Aviso de privacidad integral de demostración (https://example.invalid/aviso-privacidad-sintetico)"
+  ],
+  "filing_date": "2026-12-01"
+}

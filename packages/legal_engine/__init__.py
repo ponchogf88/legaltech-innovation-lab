@@ -22,7 +22,7 @@ from .alimony import (
     create_alimony_deposit_record,
     schedule_uapa_deposit_appointment,
 )
-from .api import create_server, handle_api_request, run_server
+from .api import create_server, format_sse_event, handle_api_request, run_server
 from .audit import AuditLog
 from .authorities import (
     KNOWN_AUTHORITIES,
@@ -84,6 +84,7 @@ from .submissions import (
     submit,
     transition,
 )
+from .telemetry import DEFAULT_TRACER, TelemetrySpan, TelemetryTracer, trace_span
 
 __version__ = "0.1.0"
 
@@ -109,6 +110,7 @@ __all__ = [
     "CourseReminder",
     "DEFAULT_DEADLINE_RULES",
     "DEFAULT_TEMPLATES_DIR",
+    "DEFAULT_TRACER",
     "DEPOSIT_STAGES",
     "Deadline",
     "Document",
@@ -137,6 +139,8 @@ __all__ = [
     "SubmissionBlockedError",
     "SubmissionState",
     "TEMPLATES",
+    "TelemetrySpan",
+    "TelemetryTracer",
     "UnknownAuthorityError",
     "UnknownTaskRouteError",
     "VALID_TASK_STATUSES",
@@ -149,6 +153,7 @@ __all__ = [
     "dispatch_alert",
     "format_alert_email_body",
     "format_duration_hms",
+    "format_sse_event",
     "get_authority",
     "get_council_persona",
     "get_stratum",
@@ -167,6 +172,7 @@ __all__ = [
     "schedule_uapa_deposit_appointment",
     "submit",
     "summarize_lawyer_academy",
+    "trace_span",
     "transition",
     "validate_legal_course",
     "validate_task_queue",

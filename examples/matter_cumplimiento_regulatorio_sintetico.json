@@ -1,0 +1,14 @@
+{
+  "id": "REG-SINT-2026-001",
+  "client_name": "Tecnologías Financieras Nórdica Sintética S.A.P.I. de C.V.",
+  "matter_type": "fiscal",
+  "authority": "sat",
+  "facts": "Desahogo sintético del oficio de requerimiento ficticio OF-SINT-SAT-2026-019 relativo al contribuyente genérico con RFC reservado XAXX010101000 en jurisdicción Federal (Sintético). Se exhibe conciliación documental simulada conforme al Código Fiscal de la Federación y aviso de privacidad demostrativo https://example.invalid/aviso-privacidad-regulatorio.",
+  "documents_needed": [
+    "Acuse sintético de recepción del requerimiento OF-SINT-SAT-2026-019",
+    "Conciliación contable-fiscal demostrativa con RFC genérico XAXX010101000",
+    "Opinión de cumplimiento positiva sintética de prueba",
+    "Poder notarial de demostración del representante legal ficticio"
+  ],
+  "filing_date": "2026-12-05"
+}

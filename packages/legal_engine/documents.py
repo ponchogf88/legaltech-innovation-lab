@@ -17,6 +17,8 @@ TEMPLATES: dict[str, str] = {
     "solicitud_general": "solicitud_general.j2",
     "escrito_presentacion": "escrito_presentacion.j2",
     "solicitud_entrega_billete_deposito": "solicitud_entrega_billete_deposito.j2",
+    "acta_asamblea_corporativa": "acta_asamblea_corporativa.j2",
+    "contestacion_requerimiento_regulatorio": "contestacion_requerimiento_regulatorio.j2",
 }
 
 
