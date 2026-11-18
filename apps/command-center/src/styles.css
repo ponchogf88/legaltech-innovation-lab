@@ -1766,6 +1766,274 @@ input {
 }
 
 /* ==========================================================================
+   Legal Academy, Diplomas & Certifications Panel (Irnerio)
+   ========================================================================== */
+.academy-isolation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-sage-soft);
+  color: var(--accent-sage-ink);
+  border: 1px solid rgba(74, 107, 91, 0.35);
+}
+
+.academy-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.academy-kpi-card {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-warm-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.academy-kpi-label {
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.academy-kpi-value {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text-ink);
+}
+
+.academy-kpi-value.is-sage {
+  color: var(--accent-sage-ink);
+}
+
+.academy-kpi-sub {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+
+.academy-reminders-box {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--accent-amber-soft);
+  border: 1px solid rgba(196, 136, 58, 0.35);
+  margin-bottom: var(--space-4);
+}
+
+.academy-reminders-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-amber-ink);
+  margin-bottom: var(--space-2);
+}
+
+.academy-reminder-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.academy-reminder-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: 0.78rem;
+  color: var(--text-ink);
+}
+
+.acad-rem-days {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-parchment-elevated);
+  border: 1px solid rgba(196, 136, 58, 0.45);
+  color: var(--accent-amber-ink);
+  flex-shrink: 0;
+}
+
+.academy-reminder-item.urgency-high .acad-rem-days {
+  background: var(--danger-crimson-soft);
+  border-color: rgba(158, 59, 51, 0.4);
+  color: var(--danger-crimson-ink);
+}
+
+.academy-course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: var(--space-3);
+}
+
+.academy-course-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-warm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.academy-course-card.status-certificado {
+  border-color: rgba(74, 107, 91, 0.45);
+  background: linear-gradient(180deg, rgba(74, 107, 91, 0.06), var(--bg-parchment));
+}
+
+.academy-course-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.academy-course-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.acad-kind-chip,
+.acad-area-chip {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-parchment-elevated);
+  border: 1px solid var(--border-warm-subtle);
+  color: var(--text-muted);
+}
+
+.acad-status-pill {
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.acad-badge-upcoming {
+  background: var(--accent-amber-soft);
+  color: var(--accent-amber-ink);
+}
+
+.acad-badge-active {
+  background: var(--accent-copper-soft);
+  color: var(--accent-copper-ink);
+}
+
+.acad-badge-eval {
+  background: var(--danger-crimson-soft);
+  color: var(--danger-crimson-ink);
+}
+
+.acad-badge-done {
+  background: var(--accent-sage-soft);
+  color: var(--accent-sage-ink);
+}
+
+.academy-course-title {
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-ink);
+  margin: 0;
+}
+
+.academy-course-inst {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.academy-course-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.academy-course-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.academy-progress-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 2px;
+}
+
+.academy-progress-track {
+  flex: 1;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-parchment-sunken);
+  overflow: hidden;
+}
+
+.academy-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent-sage);
+  transition: width 180ms ease;
+}
+
+.academy-progress-pct {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.academy-course-footer {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--border-warm-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.academy-milestone-note {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.academy-cert-folio {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--accent-sage-ink);
+}
+
+/* ==========================================================================
    Responsive Behavior (<960px drawer/stack + compact desktop adjustments)
    ========================================================================== */
 .mobile-backdrop {

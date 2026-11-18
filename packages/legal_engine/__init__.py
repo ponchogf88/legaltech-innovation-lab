@@ -2,6 +2,17 @@
 
 from __future__ import annotations
 
+from .academy import (
+    COURSE_KINDS,
+    COURSE_STATUSES,
+    LEGAL_PRACTICE_AREAS,
+    AcademyValidationError,
+    CourseReminder,
+    LegalCourse,
+    compute_course_reminders,
+    summarize_lawyer_academy,
+    validate_legal_course,
+)
 from .api import create_server, handle_api_request, run_server
 from .audit import AuditLog
 from .authorities import (
@@ -49,6 +60,7 @@ __version__ = "0.1.0"
 __all__ = [
     "__version__",
     "ALLOWED_TRANSITIONS",
+    "AcademyValidationError",
     "AuditLog",
     "AuthorityAdapter",
     "CHECKPOINT_FILENAME",
@@ -56,6 +68,9 @@ __all__ = [
     "CLOCK_DURATION_SECONDS",
     "CLOCK_FILENAME",
     "CONFIRMED_START_ISO",
+    "COURSE_KINDS",
+    "COURSE_STATUSES",
+    "CourseReminder",
     "DEFAULT_DEADLINE_RULES",
     "DEFAULT_TEMPLATES_DIR",
     "Deadline",
@@ -65,6 +80,8 @@ __all__ = [
     "IntakeValidationError",
     "InvalidTransitionError",
     "KNOWN_AUTHORITIES",
+    "LEGAL_PRACTICE_AREAS",
+    "LegalCourse",
     "Matter",
     "MockAuthority",
     "REQUIRED_TASK_FIELDS",
@@ -80,6 +97,7 @@ __all__ = [
     "UnknownAuthorityError",
     "VALID_TASK_STATUSES",
     "compute_clock_status",
+    "compute_course_reminders",
     "compute_deadlines",
     "create_server",
     "format_duration_hms",
@@ -95,6 +113,8 @@ __all__ = [
     "run_server",
     "save_checkpoint",
     "submit",
+    "summarize_lawyer_academy",
     "transition",
+    "validate_legal_course",
     "validate_task_queue",
 ]

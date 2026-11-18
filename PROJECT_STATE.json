@@ -24,8 +24,8 @@
     }
   ],
   "latest_test_results": {
-    "pytest_total": 60,
-    "pytest_passed": 60,
+    "pytest_total": 62,
+    "pytest_passed": 62,
     "pytest_failed": 0,
     "playwright_e2e_checks_passed": 6,
     "playwright_e2e_receipt_folio": "MOCK-TV-EXP-SINT-2026-001-001",

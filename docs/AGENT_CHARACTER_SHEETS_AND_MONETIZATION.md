@@ -140,3 +140,7 @@ Estos agentes no son de litigio directo en estrado, sino del **soporte administr
 ### 4. Sherlock (Investigador Forense & Búsqueda Registral)
 * **Función:** Rastreo de bienes embargables: Registro Público de la Propiedad (RPP), folio mercantil, vehículos y cruce de datos patrimoniales del deudor.
 * **Activación:** Se contrata por evento cuando se prepara un embargo con Julio César.
+
+### 5. Irnerio de Bolonia (Academia Jurídica, Diplomados & Certificaciones del Abogado)
+* **Función:** Seguimiento exclusivo de educación jurídica continua (SCJN, Casas de la Cultura Jurídica, EFFJ, Institutos de la Judicatura): recuerda inicios de cursos, fechas de sesiones/evaluaciones y lleva el conteo anual de diplomados, certificados legales y horas acreditadas por rama del Derecho, sin mezclar suscripciones personales ni ruido ajeno al litigio.
+* **Activación:** Panel dedicado en Command Center (`packages/legal_engine/academy.py`) conectado a recordatorios tempranos y bitácora SHA-256.

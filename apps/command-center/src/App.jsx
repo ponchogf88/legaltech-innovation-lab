@@ -14,12 +14,14 @@ import {
 import AgentConstellation from './components/AgentConstellation';
 import AuditTimeline, { ChronosDeadlinesList } from './components/AuditTimeline';
 import EvidenceInspector from './components/EvidenceInspector';
+import LegalAcademyPanel from './components/LegalAcademyPanel';
 import ReviewGatePanel from './components/ReviewGatePanel';
 import {
   AGENTS,
   CHRONOS_DEADLINES,
   INITIAL_AUDIT_EVENTS,
   INITIAL_EVIDENCE,
+  INITIAL_LEGAL_COURSES,
   SYNTHETIC_CASE,
   appendHashChainedEvent,
   buildDraftDocumentPreview,
@@ -41,6 +43,7 @@ export default function App() {
 
   const [evidenceItems, setEvidenceItems] = useState(INITIAL_EVIDENCE);
   const [auditEvents, setAuditEvents] = useState(INITIAL_AUDIT_EVENTS);
+  const [legalCourses, setLegalCourses] = useState(INITIAL_LEGAL_COURSES);
 
   const [gateState, setGateState] = useState({
     status: 'DRAFT',
@@ -319,6 +322,53 @@ export default function App() {
     );
   }
 
+  function handleAdvanceLegalCourse(courseId) {
+    const target = legalCourses.find((c) => c.id === courseId);
+    if (!target || target.status === 'CERTIFICADO') return;
+
+    const transitioningToCertified = target.status !== 'POR_INICIAR';
+    const earnedCount = legalCourses.filter((c) => c.status === 'CERTIFICADO').length;
+    const nextFolio = transitioningToCertified
+      ? `CERT-SINT-2026-${String(earnedCount + 1).padStart(3, '0')}`
+      : null;
+
+    setLegalCourses((prev) =>
+      prev.map((course) => {
+        if (course.id !== courseId) return course;
+        if (course.status === 'POR_INICIAR') {
+          return {
+            ...course,
+            status: 'EN_CURSO',
+            progressPct: 35,
+            nextMilestoneLabel: 'Módulo I iniciado · Evaluación parcial en progreso',
+          };
+        }
+        return {
+          ...course,
+          status: 'CERTIFICADO',
+          progressPct: 100,
+          certificateFolio: nextFolio,
+          nextMilestoneLabel: 'Diploma acreditado y archivado en expediente curricular',
+        };
+      })
+    );
+
+    setAuditEvents((prev) =>
+      appendHashChainedEvent(prev, {
+        actor: 'Irnerio · Academia Legal',
+        action: transitioningToCertified ? 'LEGAL_CERTIFICATE_EARNED' : 'LEGAL_COURSE_STARTED',
+        actionLabel: transitioningToCertified
+          ? `Certificado legal obtenido: ${target.title}`
+          : `Curso jurídico iniciado: ${target.title}`,
+        matterId: target.id,
+        stage: gateState.status,
+        detail: transitioningToCertified
+          ? `Diploma acreditado (${target.creditHours} h, ${target.practiceArea}) con folio ${nextFolio}.`
+          : `Seguimiento iniciado en ${target.institution} (agente vinculado: ${target.linkedCouncilAgent}).`,
+      })
+    );
+  }
+
   return (
     <div className="app-shell">
       {/* Obsidian Topbar */}
@@ -527,6 +577,9 @@ export default function App() {
               </div>
             )}
           </section>
+
+          {/* Specialized Legal Academy, Diplomas & Certifications Panel */}
+          <LegalAcademyPanel courses={legalCourses} onAdvanceCourse={handleAdvanceLegalCourse} />
         </main>
 
         {/* Right Pane: Evidence Inspector + Audit Timeline */}

@@ -122,6 +122,13 @@ async function main() {
       `Missing synthetic safety badge text: ${safetyText}`
     );
     assertCondition(privacyText?.includes('Privacy Lock Activo'), 'Privacy Lock banner missing');
+    const academyVisible = await page.locator('#legal-academy-section').isVisible();
+    const academyIsolation = (await page.locator('.academy-isolation-badge').textContent())?.trim();
+    assertCondition(academyVisible, 'Legal Academy panel should be visible');
+    assertCondition(
+      academyIsolation?.includes('Exclusivo Práctica Legal'),
+      `Expected Exclusivo Práctica Legal badge, got ${academyIsolation}`
+    );
     checks.push('check_1_synthetic_case_and_privacy_lock');
 
     // Check 2: Epistemic Separation (Hechos vs Conclusiones) & Evidence Validation Counter
