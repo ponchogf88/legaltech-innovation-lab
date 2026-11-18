@@ -24,8 +24,8 @@
     }
   ],
   "latest_test_results": {
-    "pytest_total": 62,
-    "pytest_passed": 62,
+    "pytest_total": 65,
+    "pytest_passed": 65,
     "pytest_failed": 0,
     "playwright_e2e_checks_passed": 6,
     "playwright_e2e_receipt_folio": "MOCK-TV-EXP-SINT-2026-001-001",
@@ -166,6 +166,18 @@
         "Workflow triggers on main and dev/** with least-privilege permissions and enforces security-check, pytest, CLI demo/clock/state, Vite build, and Playwright E2E; tests/test_ci_workflow.py passes."
       ],
       "evidence_of_completion": "Merged on dev/mission-002 via commit 2aaa64a (feat/m2-ci-gate ce4f1ef); tests/test_ci_workflow.py passed and full merged pytest suite passed 60/60."
+    },
+    {
+      "task_id": "M2-06",
+      "description": "Salón de los Pensadores (La Escuela de Atenas · 4 Estratos Canónicos sin anacronismos), Academia Legal Continua (Irnerio), y Smart Multi-Model Router (Gemini / Claude / OpenAI).",
+      "priority": "P0",
+      "dependencies": ["M2-01", "M2-04"],
+      "assigned_agent": "Argon + Hydrogen",
+      "status": "DONE",
+      "acceptance_criteria": [
+        "packages/legal_engine/academy.py, packages/legal_engine/router.py, HallOfJuristsPanel.jsx, LegalAcademyPanel.jsx, and unit/E2E tests pass 100% with clean security-check."
+      ],
+      "evidence_of_completion": "Integrated across commit edf7d21 + current commit on dev/mission-002; 65/65 pytest passing, vite build 1410 modules, security-check clean 6/6."
     },
     {
       "task_id": "M2-02",

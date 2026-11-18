@@ -14,6 +14,7 @@ import {
 import AgentConstellation from './components/AgentConstellation';
 import AuditTimeline, { ChronosDeadlinesList } from './components/AuditTimeline';
 import EvidenceInspector from './components/EvidenceInspector';
+import HallOfJuristsPanel from './components/HallOfJuristsPanel';
 import LegalAcademyPanel from './components/LegalAcademyPanel';
 import ReviewGatePanel from './components/ReviewGatePanel';
 import {
@@ -369,6 +370,19 @@ export default function App() {
     );
   }
 
+  function handleInvokeJurist(jurist, stratum) {
+    setAuditEvents((prev) =>
+      appendHashChainedEvent(prev, {
+        actor: `${jurist.name} · ${stratum.tabLabel}`,
+        action: 'JURIST_COUNCIL_CONSULTED',
+        actionLabel: `Dictamen preliminar invocado (${jurist.preferredProvider})`,
+        matterId: SYNTHETIC_CASE.caseId,
+        stage: gateState.status,
+        detail: `${jurist.sealLabel} | Ruta=${jurist.taskKind}: ${jurist.briefSample}`,
+      })
+    );
+  }
+
   return (
     <div className="app-shell">
       {/* Obsidian Topbar */}
@@ -577,6 +591,9 @@ export default function App() {
               </div>
             )}
           </section>
+
+          {/* Historical Council of Jurists (4 Strata - School of Athens) & Multi-Model Router */}
+          <HallOfJuristsPanel onInvokeJurist={handleInvokeJurist} />
 
           {/* Specialized Legal Academy, Diplomas & Certifications Panel */}
           <LegalAcademyPanel courses={legalCourses} onAdvanceCourse={handleAdvanceLegalCourse} />

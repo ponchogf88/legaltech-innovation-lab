@@ -2034,6 +2034,297 @@ input {
 }
 
 /* ==========================================================================
+   Hall of Jurists Panel (4 Historical Strata · School of Athens & Router)
+   ========================================================================== */
+.hall-of-jurists-panel {
+  border-top: 3px solid var(--accent-copper);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.hall-of-jurists-panel.stratum-theme-i {
+  border-top-color: #7c8982;
+}
+
+.hall-of-jurists-panel.stratum-theme-ii {
+  border-top-color: #9e3b33;
+}
+
+.hall-of-jurists-panel.stratum-theme-iii {
+  border-top-color: #c4883a;
+}
+
+.hall-of-jurists-panel.stratum-theme-iv {
+  border-top-color: #1a1f1c;
+}
+
+.zero-anachronism-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-copper-soft);
+  color: var(--accent-copper-ink);
+  border: 1px solid rgba(184, 100, 63, 0.35);
+}
+
+.strata-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.stratum-tab {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-warm);
+  background: var(--bg-parchment);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 140ms ease;
+}
+
+.stratum-tab:hover {
+  background: var(--bg-parchment-sunken);
+  color: var(--text-ink);
+}
+
+.stratum-tab.is-selected {
+  background: var(--bg-obsidian);
+  border-color: var(--bg-obsidian);
+  color: var(--text-on-dark);
+}
+
+.stratum-epoch-banner {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-warm-subtle);
+  margin-bottom: var(--space-3);
+}
+
+.stratum-epoch-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--text-ink);
+}
+
+.stratum-visual-tag {
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-parchment-elevated);
+  border: 1px solid var(--border-warm);
+  color: var(--accent-copper-ink);
+}
+
+.stratum-epoch-rule {
+  margin: 4px 0 0 0;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.jurist-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+}
+
+.jurist-chip {
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-warm);
+  background: var(--bg-parchment-elevated);
+  color: var(--text-ink);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+.jurist-chip:hover {
+  border-color: var(--accent-copper);
+}
+
+.jurist-chip.is-active {
+  background: var(--accent-copper);
+  border-color: var(--accent-copper);
+  color: #ffffff;
+}
+
+.jurist-dossier-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(240px, 1fr);
+  gap: var(--space-4);
+}
+
+.jurist-sheet-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-warm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jurist-sheet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.jurist-seal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-parchment-elevated);
+  border: 1px solid var(--border-warm);
+  color: var(--accent-copper-ink);
+}
+
+.jurist-phase-chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.jurist-name {
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 2px 0 0 0;
+  color: var(--text-ink);
+}
+
+.jurist-subtitle {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--accent-copper-ink);
+  margin: 0;
+}
+
+.jurist-superpower {
+  font-size: 0.81rem;
+  line-height: 1.45;
+  color: var(--text-ink);
+  margin: 0;
+}
+
+.jurist-brief-box {
+  margin-top: auto;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-parchment-elevated);
+  border-left: 3px solid var(--accent-amber);
+}
+
+.jurist-brief-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--accent-amber-ink);
+}
+
+.jurist-brief-text {
+  margin: 4px 0 0 0;
+  font-size: 0.77rem;
+  color: var(--text-muted);
+}
+
+.router-telemetry-card {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-obsidian);
+  border: 1px solid var(--border-dark);
+  color: var(--text-on-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.router-card-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #e49773;
+}
+
+.router-provider-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--text-on-dark);
+}
+
+.router-model-tier {
+  font-size: 0.74rem;
+  color: #b7d8c7;
+}
+
+.router-meta-list {
+  margin: 4px 0;
+  display: grid;
+  gap: 6px;
+}
+
+.router-meta-list dt {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+}
+
+.router-meta-list dd {
+  margin: 1px 0 0 0;
+  font-size: 0.77rem;
+  color: var(--text-on-dark);
+}
+
+.jurist-invoke-btn {
+  margin-top: auto;
+  justify-content: center;
+}
+
+.jurist-invoked-banner {
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 820px) {
+  .jurist-dossier-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
    Responsive Behavior (<960px drawer/stack + compact desktop adjustments)
    ========================================================================== */
 .mobile-backdrop {

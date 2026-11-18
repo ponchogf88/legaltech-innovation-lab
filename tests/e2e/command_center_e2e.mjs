@@ -129,6 +129,13 @@ async function main() {
       academyIsolation?.includes('Exclusivo Práctica Legal'),
       `Expected Exclusivo Práctica Legal badge, got ${academyIsolation}`
     );
+    const hallVisible = await page.locator('#hall-of-jurists-section').isVisible();
+    const zeroAnachBadge = (await page.locator('.zero-anachronism-badge').textContent())?.trim();
+    assertCondition(hallVisible, 'Hall of Jurists panel should be visible');
+    assertCondition(
+      zeroAnachBadge?.includes('Cero Anacronismos'),
+      `Expected Cero Anacronismos badge, got ${zeroAnachBadge}`
+    );
     checks.push('check_1_synthetic_case_and_privacy_lock');
 
     // Check 2: Epistemic Separation (Hechos vs Conclusiones) & Evidence Validation Counter
