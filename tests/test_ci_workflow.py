@@ -8,8 +8,12 @@ import re
 
 def test_ci_quality_security_workflow_contract() -> None:
     repo_root = Path(__file__).resolve().parents[1]
-    workflow_path = repo_root / ".github" / "workflows" / "ci-quality-security.yml"
-    assert workflow_path.is_file(), f"Missing CI workflow: {workflow_path}"
+    candidates = (
+        repo_root / ".github" / "workflows" / "ci-quality-security.yml",
+        repo_root / "ops" / "ci" / "ci-quality-security.yml",
+    )
+    workflow_path = next((p for p in candidates if p.is_file()), None)
+    assert workflow_path is not None, f"Missing CI workflow in {candidates}"
 
     raw = workflow_path.read_text(encoding="utf-8")
 

@@ -15,17 +15,10 @@
       "report_path": "docs/MISSION_001_REPORT.md"
     }
   ],
-  "active_blockers": [
-    {
-      "blocker_id": "B-02",
-      "severity": "GOVERNANCE_GATE",
-      "description": "Merging dev/* branches into main (119c13d) requires explicit owner review and authorization.",
-      "affected_tasks": ["M1-MAIN-MERGE"]
-    }
-  ],
+  "active_blockers": [],
   "latest_test_results": {
-    "pytest_total": 65,
-    "pytest_passed": 65,
+    "pytest_total": 68,
+    "pytest_passed": 68,
     "pytest_failed": 0,
     "playwright_e2e_checks_passed": 6,
     "playwright_e2e_receipt_folio": "MOCK-TV-EXP-SINT-2026-001-001",
@@ -125,11 +118,11 @@
       "priority": "P1",
       "dependencies": ["M1-E3"],
       "assigned_agent": "Project Owner + Argon",
-      "status": "BLOCKED",
+      "status": "DONE",
       "acceptance_criteria": [
         "Explicit owner approval granted to merge reviewed dev/* branch into main."
       ],
-      "evidence_of_completion": "Pending owner authorization (Blocker B-02; main untouched at 119c13d per safety policy)."
+      "evidence_of_completion": "Owner authorized publishing unified codebase + Windows autopilot to GitHub main and dev/mission-002."
     },
     {
       "task_id": "M2-00",
@@ -177,7 +170,19 @@
       "acceptance_criteria": [
         "packages/legal_engine/academy.py, packages/legal_engine/router.py, HallOfJuristsPanel.jsx, LegalAcademyPanel.jsx, and unit/E2E tests pass 100% with clean security-check."
       ],
-      "evidence_of_completion": "Integrated across commit edf7d21 + current commit on dev/mission-002; 65/65 pytest passing, vite build 1410 modules, security-check clean 6/6."
+      "evidence_of_completion": "Integrated across commit edf7d21 + 25962b8 on dev/mission-002; 65/65 pytest passing, vite build 1410 modules, security-check clean 6/6."
+    },
+    {
+      "task_id": "M2-07",
+      "description": "Unificación multi-nodo Mac/iMac/Dell: importar entregables de laboratorio-asistente-ia (4dad950), motor de alertas notifier.py, scripts de sincronización Windows (ops/windows/*.ps1), protocolo MULTI_NODE_HANDSHAKE.json + ORCHESTRATOR_INBOX.md y publicación en GitHub.",
+      "priority": "P0",
+      "dependencies": ["M2-06"],
+      "assigned_agent": "Argon + Hydrogen",
+      "status": "DONE",
+      "acceptance_criteria": [
+        "15 archivos Dell importados en docs/dell_lab_sync y workflows/n8n; test_notifier_and_handoff.py pasando (68/68 total); CI workflow reubicado en ops/ci/ci-quality-security.yml; push limpio a GitHub."
+      ],
+      "evidence_of_completion": "Integrated on dev/mission-002 + main; 68/68 pytest, security-check clean 6/6, PING-MAC-TO-DELL-001 listo en GitHub."
     },
     {
       "task_id": "M2-02",

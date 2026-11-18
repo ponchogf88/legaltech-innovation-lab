@@ -19,17 +19,20 @@ from .authorities import get_authority
 from .continuity import (
     CHECKPOINT_FILENAME,
     CLOCK_FILENAME,
+    HANDSHAKE_FILENAME,
     STATE_FILENAME,
     compute_clock_status,
     identify_next_unblocked_task,
     inspect_git_state,
     save_checkpoint,
     validate_task_queue,
+    write_node_handshake,
 )
 from .deadlines import compute_deadlines
 from .documents import render_document
 from .intake import intake_matter
 from .models import Submission, SubmissionState
+from .notifier import ALERT_LEVELS, build_alert_notification, dispatch_alert
 from .review import ReviewQueue
 from .storage import SQLiteRepository
 from .submissions import SubmissionBlockedError, submit
@@ -356,6 +359,49 @@ def _run_checkpoint(args: argparse.Namespace) -> int:
     return 0
 
 
+def _run_handoff(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve()
+    try:
+        payload = write_node_handshake(
+            repo_root=root,
+            from_node=args.from_node,
+            to_node=args.to_node,
+            instruction_note=args.note,
+            ping_id=args.ping_id,
+            requires_owner_review=args.requires_review,
+            handshake_path=root / HANDSHAKE_FILENAME,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"Failed to record multi-node handoff: {exc}", file=sys.stderr)
+        return 1
+    print(json.dumps(payload, indent=2, ensure_ascii=False))
+    return 0
+
+
+def _run_notify(args: argparse.Namespace) -> int:
+    root = Path(args.root).resolve()
+    try:
+        alert = build_alert_notification(
+            alert_level=args.level,
+            title=args.title,
+            summary=args.summary,
+            matter_id=args.matter_id,
+            requires_human_action=not args.no_human_action,
+            recommended_action=args.action,
+            node_origin=args.node,
+        )
+        result = dispatch_alert(
+            alert,
+            log_path=root / "logs" / "notifications.jsonl",
+            smtp_config={"dry_run": args.dry_run} if args.dry_run else None,
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"Notification failed: {exc}", file=sys.stderr)
+        return 1
+    print(json.dumps({"alert": alert.to_dict(), "delivery": result}, indent=2, ensure_ascii=False))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Construct the CLI argument parser for legal_engine."""
     parser = argparse.ArgumentParser(
@@ -482,6 +528,48 @@ def build_parser() -> argparse.ArgumentParser:
         help="Description of the last completed operation.",
     )
     chk_parser.set_defaults(func=_run_checkpoint)
+
+    handoff_parser = subparsers.add_parser(
+        "handoff",
+        help="Update MULTI_NODE_HANDSHAKE.json for synchronized multi-machine orchestration.",
+    )
+    handoff_parser.add_argument(
+        "--root",
+        default=str(DEFAULT_REPO_ROOT),
+        help="Repository root directory.",
+    )
+    handoff_parser.add_argument("--from-node", required=True, help="Sending machine/orchestrator node.")
+    handoff_parser.add_argument("--to-node", required=True, help="Target receiving node.")
+    handoff_parser.add_argument("--note", required=True, help="Clear handoff instruction note.")
+    handoff_parser.add_argument("--ping-id", default=None, help="Optional echo ping/pong identifier.")
+    handoff_parser.add_argument(
+        "--requires-review",
+        action="store_true",
+        help="Flag handoff as requiring owner attention or final review.",
+    )
+    handoff_parser.set_defaults(func=_run_handoff)
+
+    notify_parser = subparsers.add_parser(
+        "notify",
+        help="Record and optionally email a PII-safe attention or review alert.",
+    )
+    notify_parser.add_argument(
+        "--root",
+        default=str(DEFAULT_REPO_ROOT),
+        help="Repository root directory.",
+    )
+    notify_parser.add_argument("--level", choices=list(ALERT_LEVELS), default="ACTION_REQUIRED")
+    notify_parser.add_argument("--title", required=True)
+    notify_parser.add_argument("--summary", required=True)
+    notify_parser.add_argument("--matter-id", default="SYSTEM-ORCHESTRATION")
+    notify_parser.add_argument(
+        "--action",
+        default="Abrir Command Center y aprobar compuerta HITL o revisar cambios en GitHub.",
+    )
+    notify_parser.add_argument("--node", default="MAC_COMMAND_CENTER")
+    notify_parser.add_argument("--no-human-action", action="store_true")
+    notify_parser.add_argument("--dry-run", action="store_true")
+    notify_parser.set_defaults(func=_run_notify)
 
     return parser
 

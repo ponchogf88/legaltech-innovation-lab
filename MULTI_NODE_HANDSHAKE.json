@@ -1,0 +1,97 @@
+{
+  "protocol_version": "1.0.0",
+  "sequence_number": 1,
+  "last_updated_utc": "2026-11-18T14:17:55Z",
+  "last_updated_by_node": "MAC_COMMAND_CENTER",
+  "next_assigned_node": "DELL_WINDOWS_LAB",
+  "active_ping_id": "PING-MAC-TO-DELL-001",
+  "expected_echo_command": ".venv/bin/python -m legal_engine.cli handoff --from-node DELL_WINDOWS_LAB --to-node MAC_COMMAND_CENTER --ping-id PONG-PING-MAC-TO-DELL-001 --note \"Confirmed sync on DELL_WINDOWS_LAB\"",
+  "requires_owner_review": false,
+  "recommended_dell_orchestrator": {
+    "primary_orchestrator": "Gemini 4 Argon (Max)",
+    "heavy_coding_worker": "Gemini 4 Hydrogen (Ultracode / Max)",
+    "rule": "Keep Argon on Max for planning/merge review; delegate bulk file edits to Hydrogen Ultracode."
+  },
+  "git_snapshot": {
+    "branch": "dev/mission-002",
+    "commit": "722e735133ed0296929f7d9b5bd1d4d1b3d67296",
+    "short_commit": "722e735"
+  },
+  "clock_reference": {
+    "clock_id": "LEGALTECH-72H-MISSION-CLOCK",
+    "protocol": "LEGALTECH-CONTINUOUS-ENGINEERING-PROTOCOL",
+    "immutable_start_iso": "2026-11-15T14:03:47-06:00",
+    "immutable_start_utc": "2026-11-15T20:03:47Z",
+    "deadline_iso": "2026-11-18T14:03:47-06:00",
+    "deadline_utc": "2026-11-18T20:03:47Z",
+    "duration_hours": 72,
+    "duration_seconds": 259200,
+    "auto_reset_allowed": false,
+    "survives_restarts": true,
+    "created_by_commit": "8d3ad92",
+    "evaluated_at_utc": "2026-11-18T14:17:55Z",
+    "elapsed_seconds": 238448,
+    "remaining_seconds": 20751,
+    "elapsed_human": "66h 14m 08s",
+    "remaining_human": "05h 45m 51s",
+    "progress_pct": 91.99,
+    "is_expired": false
+  },
+  "repositories": [
+    "https://github.com/ponchogf88/legaltech-innovation-lab",
+    "https://github.com/ponchogf88/laboratorio-asistente-ia"
+  ],
+  "latest_instruction": "Unificado código Mac + artefactos Dell (4dad950). Ejecutar eco PONG-PING-MAC-TO-DELL-001 para confirmar comunicación en vivo y luego tomar ROUTINE-DELL-01 (M2-03).",
+  "routines_for_dell": [
+    {
+      "routine_id": "ROUTINE-DELL-01",
+      "task_id": "M2-03",
+      "title": "Real-Time SSE Bridge + n8n Flows",
+      "status": "READY",
+      "recommended_model": "Hydrogen (Ultracode) bajo orquestación Argon (Max)",
+      "files": [
+        "packages/legal_engine/api.py",
+        "workflows/n8n/03_buho_legal_tribunal_virtual.json",
+        "workflows/n8n/05_argon_autopilot_master_orchestrator.json",
+        "apps/command-center/src/App.jsx"
+      ]
+    },
+    {
+      "routine_id": "ROUTINE-DELL-02",
+      "task_id": "M2-02",
+      "title": "OpenTelemetry Spans across intake, documents, review, submissions & api.py",
+      "status": "READY",
+      "recommended_model": "Hydrogen (Ultracode)",
+      "files": [
+        "packages/legal_engine/intake.py",
+        "packages/legal_engine/review.py",
+        "packages/legal_engine/submissions.py",
+        "packages/legal_engine/api.py"
+      ]
+    },
+    {
+      "routine_id": "ROUTINE-DELL-03",
+      "task_id": "M2-05",
+      "title": "Cotizador Preliminar Fase 1 y Buzón Multimodal Omnicanal",
+      "status": "BACKLOG",
+      "recommended_model": "Argon (Max) + Hydrogen (Ultracode)",
+      "files": [
+        "docs/dell_lab_sync/COTIZADOR_HONORARIOS_PRELIMINARES.md",
+        "docs/dell_lab_sync/BUZON_MULTIMODAL_OMNICANAL.md",
+        "apps/command-center/"
+      ]
+    }
+  ],
+  "ping_history": [
+    {
+      "sequence": 1,
+      "timestamp_utc": "2026-11-18T14:17:55Z",
+      "from_node": "MAC_COMMAND_CENTER",
+      "to_node": "DELL_WINDOWS_LAB",
+      "ping_id": "PING-MAC-TO-DELL-001",
+      "commit": "722e735",
+      "branch": "dev/mission-002",
+      "note": "Unificado código Mac + artefactos Dell (4dad950). Ejecutar eco PONG-PING-MAC-TO-DELL-001 para confirmar comunicación en vivo y luego tomar ROUTINE-DELL-01 (M2-03)."
+    }
+  ]
+}

@@ -29,6 +29,7 @@ from .continuity import (
     CLOCK_DURATION_SECONDS,
     CLOCK_FILENAME,
     CONFIRMED_START_ISO,
+    HANDSHAKE_FILENAME,
     REQUIRED_TASK_FIELDS,
     STATE_FILENAME,
     VALID_TASK_STATUSES,
@@ -40,11 +41,20 @@ from .continuity import (
     load_or_init_72h_clock,
     save_checkpoint,
     validate_task_queue,
+    write_node_handshake,
 )
 from .deadlines import DEFAULT_DEADLINE_RULES, Deadline, compute_deadlines, list_upcoming
 from .documents import DEFAULT_TEMPLATES_DIR, TEMPLATES, DocumentRenderError, render_document
 from .intake import IntakeValidationError, intake_matter
 from .models import Document, EvidenceItem, Matter, Submission, SubmissionState
+from .notifier import (
+    ALERT_LEVELS,
+    AlertNotification,
+    NotificationError,
+    build_alert_notification,
+    dispatch_alert,
+    format_alert_email_body,
+)
 from .review import ReviewError, ReviewQueue
 from .router import (
     COUNCIL_PERSONAS,
@@ -71,7 +81,9 @@ __version__ = "0.1.0"
 __all__ = [
     "__version__",
     "ALLOWED_TRANSITIONS",
+    "ALERT_LEVELS",
     "AcademyValidationError",
+    "AlertNotification",
     "AuditLog",
     "AuthorityAdapter",
     "CHECKPOINT_FILENAME",
@@ -89,6 +101,7 @@ __all__ = [
     "Document",
     "DocumentRenderError",
     "EvidenceItem",
+    "HANDSHAKE_FILENAME",
     "IntakeValidationError",
     "InvalidTransitionError",
     "KNOWN_AUTHORITIES",
@@ -97,6 +110,7 @@ __all__ = [
     "MODEL_PROFILES",
     "Matter",
     "MockAuthority",
+    "NotificationError",
     "REQUIRED_TASK_FIELDS",
     "Receipt",
     "ReviewError",
@@ -112,10 +126,13 @@ __all__ = [
     "UnknownAuthorityError",
     "UnknownTaskRouteError",
     "VALID_TASK_STATUSES",
+    "build_alert_notification",
     "compute_clock_status",
     "compute_course_reminders",
     "compute_deadlines",
     "create_server",
+    "dispatch_alert",
+    "format_alert_email_body",
     "format_duration_hms",
     "get_authority",
     "get_council_persona",
@@ -137,4 +154,5 @@ __all__ = [
     "transition",
     "validate_legal_course",
     "validate_task_queue",
+    "write_node_handshake",
 ]

@@ -1,0 +1,153 @@
+{
+  "name": "Muse El Buho - Asistente Legal y Tribunal Virtual",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {
+          "readStatus": "unread"
+        }
+      },
+      "id": "node-trigger-gmail",
+      "name": "1. Entrada Correos y Notificaciones",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "extractText",
+        "binaryPropertyName": "data"
+      },
+      "id": "node-pdf-parser",
+      "name": "2. Extractor Acuerdos y PDFs",
+      "type": "n8n-nodes-base.readPdf",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres 'Muse El Búho', asistente legal autónomo. Analiza el correo o acuerdo judicial adjunto. Extrae: 1) Número de expediente, 2) Juzgado/Tribunal, 3) Término fatal de contestación (días y fecha límite), 4) Síntesis del acuerdo, 5) Borrador de promoción legal requerida para desahogo. Devuelve JSON estructurado."
+      },
+      "id": "node-gemini-brain",
+      "name": "3. Cerebro Buho (Gemini 2.5 Pro)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "fillTemplate",
+        "templateId": "form_promocion_tribunal_virtual",
+        "outputFormat": "pdf"
+      },
+      "id": "node-form-generator",
+      "name": "4. Llenador de Promociones y Formularios",
+      "type": "n8n-nodes-base.documentGenerator",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "=@abogado_master",
+        "text": "=🦉 *Muse El Búho - Nueva Notificación Judicial*\n\n📁 *Expediente:* {{$json.expediente}}\n⚖️ *Juzgado:* {{$json.juzgado}}\n⏳ *Vencimiento:* {{$json.termino_fatal}}\n\nHe redactado el borrador de la promoción. ¿Autorizas el envío al Tribunal Virtual?",
+        "replyMarkup": {
+          "inlineKeyboard": [
+            [
+              {
+                "text": "✅ Autorizar y Enviar a Tribunal",
+                "callback_data": "send_to_court"
+              },
+              {
+                "text": "✏️ Editar Borrador",
+                "callback_data": "edit_draft"
+              }
+            ]
+          ]
+        }
+      },
+      "id": "node-telegram-approval",
+      "name": "5. Aprobacion Abogado (Filtro Humano)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://tribunalvirtual.pjenl.gob.mx/api/promociones/presentar",
+        "method": "POST",
+        "sendBinaryData": true,
+        "binaryPropertyName": "promocion_firmada.pdf"
+      },
+      "id": "node-tribunal-submit",
+      "name": "6. Envio a Tribunal Virtual y Acuse",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "1. Entrada Correos y Notificaciones": {
+      "main": [
+        [
+          {
+            "node": "2. Extractor Acuerdos y PDFs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Extractor Acuerdos y PDFs": {
+      "main": [
+        [
+          {
+            "node": "3. Cerebro Buho (Gemini 2.5 Pro)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Cerebro Buho (Gemini 2.5 Pro)": {
+      "main": [
+        [
+          {
+            "node": "4. Llenador de Promociones y Formularios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Llenador de Promociones y Formularios": {
+      "main": [
+        [
+          {
+            "node": "5. Aprobacion Abogado (Filtro Humano)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Aprobacion Abogado (Filtro Humano)": {
+      "main": [
+        [
+          {
+            "node": "6. Envio a Tribunal Virtual y Acuse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

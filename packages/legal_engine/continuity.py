@@ -12,6 +12,7 @@ from typing import Any
 CLOCK_FILENAME = "72H_CLOCK.json"
 STATE_FILENAME = "PROJECT_STATE.json"
 CHECKPOINT_FILENAME = "CHECKPOINT.json"
+HANDSHAKE_FILENAME = "MULTI_NODE_HANDSHAKE.json"
 
 CONFIRMED_START_ISO = "2026-11-15T14:03:47-06:00"
 CLOCK_DURATION_HOURS = 72
@@ -345,3 +346,94 @@ def save_checkpoint(
         encoding="utf-8",
     )
     return checkpoint_payload
+
+
+def write_node_handshake(
+    repo_root: Path,
+    *,
+    from_node: str,
+    to_node: str,
+    instruction_note: str,
+    ping_id: str | None = None,
+    routines: Sequence[dict[str, Any]] | None = None,
+    synced_repos: Sequence[str] | None = None,
+    requires_owner_review: bool = False,
+    handshake_path: Path | None = None,
+    clock_path: Path | None = None,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    """Update MULTI_NODE_HANDSHAKE.json so Mac, iMac, and Windows Dell orchestrators stay aligned."""
+    repo_root = Path(repo_root)
+    resolved_handshake = (
+        Path(handshake_path) if handshake_path is not None else repo_root / HANDSHAKE_FILENAME
+    )
+    resolved_clock = Path(clock_path) if clock_path is not None else repo_root / CLOCK_FILENAME
+
+    existing: dict[str, Any] = {}
+    if resolved_handshake.is_file():
+        existing = json.loads(resolved_handshake.read_text(encoding="utf-8"))
+
+    now_utc = _to_utc(now if now is not None else datetime.now(timezone.utc))
+    git_state = inspect_git_state(repo_root)
+    clock_status = compute_clock_status(resolved_clock, now=now_utc) if resolved_clock.is_file() else None
+
+    seq = int(existing.get("sequence_number", 0)) + 1
+    history = list(existing.get("ping_history", []))
+    resolved_ping = ping_id or f"HANDOFF-{seq:03d}"
+    history.append({
+        "sequence": seq,
+        "timestamp_utc": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "from_node": from_node,
+        "to_node": to_node,
+        "ping_id": resolved_ping,
+        "commit": git_state["short_commit"],
+        "branch": git_state["branch"],
+        "note": instruction_note,
+    })
+
+    payload: dict[str, Any] = {
+        "protocol_version": "1.0.0",
+        "sequence_number": seq,
+        "last_updated_utc": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "last_updated_by_node": from_node,
+        "next_assigned_node": to_node,
+        "active_ping_id": resolved_ping,
+        "expected_echo_command": (
+            f".venv/bin/python -m legal_engine.cli handoff --from-node {to_node} "
+            f"--to-node {from_node} --ping-id PONG-{resolved_ping} "
+            f'--note "Confirmed sync on {to_node}"'
+        ),
+        "requires_owner_review": requires_owner_review,
+        "recommended_dell_orchestrator": {
+            "primary_orchestrator": "Gemini 4 Argon (Max)",
+            "heavy_coding_worker": "Gemini 4 Hydrogen (Ultracode / Max)",
+            "rule": "Keep Argon on Max for planning/merge review; delegate bulk file edits to Hydrogen Ultracode.",
+        },
+        "git_snapshot": {
+            "branch": git_state["branch"],
+            "commit": git_state["head_commit"],
+            "short_commit": git_state["short_commit"],
+        },
+        "clock_reference": clock_status,
+        "repositories": list(synced_repos)
+        if synced_repos is not None
+        else existing.get(
+            "repositories",
+            [
+                "https://github.com/ponchogf88/legaltech-innovation-lab",
+                "https://github.com/ponchogf88/laboratorio-asistente-ia",
+            ],
+        ),
+        "latest_instruction": instruction_note,
+        "routines_for_dell": list(routines)
+        if routines is not None
+        else existing.get("routines_for_dell", []),
+        "ping_history": history[-20:],
+    }
+
+    resolved_handshake.parent.mkdir(parents=True, exist_ok=True)
+    resolved_handshake.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return payload

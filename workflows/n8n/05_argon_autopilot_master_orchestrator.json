@@ -1,0 +1,187 @@
+{
+  "name": "Argon Auto-Pilot - Orquestador Maestro LegalTech",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "argon-autopilot",
+        "options": {}
+      },
+      "id": "argon-step-1-ingest",
+      "name": "1. Ingesta y Triaje Multimodal (Gemini 2.5 Flash)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const fojas = Number($json.fojas || 35);\nconst audioMin = Number($json.audioMin || 15);\nconst urgente = Boolean($json.urgente);\nlet base = 1500;\nif (fojas > 30 && fojas <= 100) base = 3500;\nelse if (fojas > 100) base = 3500 + (fojas - 100) * 25;\nif (audioMin > 15 && audioMin <= 60) base += 500;\nelse if (audioMin > 60) base += 1000;\nconst total = Math.round(urgente ? base * 1.5 : base);\nreturn [{ json: { ...$json, honorariosEstimadosMXN: total } }];"
+      },
+      "id": "argon-step-2-quote",
+      "name": "2. Cotizador Preliminar Automatico (Fase 1)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres Sherlock Holmes (Subagente Forense). Audita pruebas, contratos, audios y sellos en busca de contradicciones, fechas alteradas o defectos de legitimacion."
+      },
+      "id": "argon-step-3a-sherlock",
+      "name": "3A. Subagente Sherlock (Auditoria Forense)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [700, 120]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres Sun Tzu (Subagente Estrategico). Calcula los terminos fatales exactos y define el momento procesal optimo para contestar y desgastar a la contraparte."
+      },
+      "id": "argon-step-3b-suntzu",
+      "name": "3B. Subagente Sun Tzu (Plazos y Estrategia)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [700, 240]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres Atenea (Subagente de Ofensiva). Formula excepciones procesales, medidas cautelares o reconvencion directa para tomar la iniciativa del juicio."
+      },
+      "id": "argon-step-3c-atenea",
+      "name": "3C. Subagente Atenea (Ofensiva y Excepciones)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [700, 360]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres Alejandro Magno (Subagente de Cierre). Disena la salida fulminante (Nudo Gordiano): propuesta de convenio rapido o cierre negociado de alto impacto."
+      },
+      "id": "argon-step-3d-alejandro",
+      "name": "3D. Subagente Alejandro (Nudo Gordiano / Convenio)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [700, 480]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres Muse (El Buho). Consolida en un borrador procesal coherente los hallazgos de Sherlock, los tiempos de Sun Tzu, la ofensiva de Atenea y el convenio de Alejandro."
+      },
+      "id": "argon-step-4-muse",
+      "name": "4. Sintesis Maestra de Muse (El Buho)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [980, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "=@abogado_titular",
+        "text": "=🦉 Argon Auto-Pilot completado.\nExpediente procesado y cotizacion de Estudio ($ {{$json.honorariosEstimadosMXN}} MXN) lista.\nPuerta Humana Abierta: ¿Autorizas a Mercurio presentar el borrador en Tribunal Virtual?"
+      },
+      "id": "argon-step-5-human-gate",
+      "name": "5. Puerta de Control Humano (Visto Bueno y Despacho Mercurio)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1220, 300]
+    }
+  ],
+  "connections": {
+    "1. Ingesta y Triaje Multimodal (Gemini 2.5 Flash)": {
+      "main": [
+        [
+          {
+            "node": "2. Cotizador Preliminar Automatico (Fase 1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Cotizador Preliminar Automatico (Fase 1)": {
+      "main": [
+        [
+          {
+            "node": "3A. Subagente Sherlock (Auditoria Forense)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3B. Subagente Sun Tzu (Plazos y Estrategia)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3C. Subagente Atenea (Ofensiva y Excepciones)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3D. Subagente Alejandro (Nudo Gordiano / Convenio)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3A. Subagente Sherlock (Auditoria Forense)": {
+      "main": [
+        [
+          {
+            "node": "4. Sintesis Maestra de Muse (El Buho)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3B. Subagente Sun Tzu (Plazos y Estrategia)": {
+      "main": [
+        [
+          {
+            "node": "4. Sintesis Maestra de Muse (El Buho)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3C. Subagente Atenea (Ofensiva y Excepciones)": {
+      "main": [
+        [
+          {
+            "node": "4. Sintesis Maestra de Muse (El Buho)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3D. Subagente Alejandro (Nudo Gordiano / Convenio)": {
+      "main": [
+        [
+          {
+            "node": "4. Sintesis Maestra de Muse (El Buho)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Sintesis Maestra de Muse (El Buho)": {
+      "main": [
+        [
+          {
+            "node": "5. Puerta de Control Humano (Visto Bueno y Despacho Mercurio)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

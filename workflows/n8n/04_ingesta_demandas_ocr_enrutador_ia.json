@@ -1,0 +1,142 @@
+{
+  "name": "Ingesta de Demandas - OCR Multimodal y Enrutador Hibrido",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ingesta-demanda",
+        "options": {}
+      },
+      "id": "node-webhook-upload",
+      "name": "1. Recepcion de Demanda (PDF / Escaneo)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-flash",
+        "prompt": "Actúa como transcriptor jurídico y perito en OCR. Lee el documento escaneado adjunto. Extrae con precisión milimétrica: 1) Sello de recepción del Juzgado y fecha de notificación oficial, 2) Número de expediente y juzgado, 3) Vía procesal (Ordinario, Ejecutivo Mercantil, Amparo, Laboral), 4) Actor y Demandado, 5) Prestaciones reclamadas y monto de la suerte principal. Devuelve un JSON estructurado con la clave 'tipo_asunto': 'simple_tramite' o 'litigio_complejo'."
+      },
+      "id": "node-fast-ocr",
+      "name": "2. Gemini 2.5 Flash (OCR Vision y Extraccion Rapida)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.tipo_asunto}}",
+              "value2": "litigio_complejo"
+            }
+          ]
+        }
+      },
+      "id": "node-router",
+      "name": "3. Enrutador Inteligente (Complejidad)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "model": "gemini-2.5-pro",
+        "prompt": "Eres el Senado Legal (Atenea, Sun Tzu y Sherlock Holmes). Analiza a fondo esta demanda inicial: 1) Sherlock: Audita los documentos base de la acción y encuentra fallas procesales o falta de legitimación. 2) Sun Tzu: Calcula el término fatal de contestación y la estrategia de desgaste o reconvención. 3) Atenea: Redacta las excepciones de previo y especial pronunciamiento para desechar o congelar la demanda. Genera el Dictamen Táctico de Contestación."
+      },
+      "id": "node-deep-reasoning",
+      "name": "4. Tier de Razonamiento Profundo (Gemini 2.5 Pro - Senado Legal)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [940, 200]
+    },
+    {
+      "parameters": {
+        "operation": "createSummary",
+        "prompt": "Genera una ficha ejecutiva de trámite con la fecha de acuerdo y el requerimiento simple para archivo o contestación estándar."
+      },
+      "id": "node-fast-summary",
+      "name": "5. Tier Rapido (Ficha de Tramite Ordinario)",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [940, 420]
+    },
+    {
+      "parameters": {
+        "chatId": "=@abogado_titular",
+        "text": "=⚖️ *NUEVO CASO RECIBIDO - DICTAMEN DE INGESTA*\n\n📁 *Expediente:* {{$json.expediente}}\n🏛️ *Juzgado:* {{$json.juzgado}}\n⏳ *TÉRMINO FATAL PARA CONTESTAR:* {{$json.termino_fatal}} días hábiles.\n\n🔍 *Hallazgos de Sherlock:* {{$json.hallazgo_sherlock}}\n🛡️ *Estrategia de Atenea:* {{$json.estrategia_atenea}}\n\nAccede a tu panel para autorizar la contestación."
+      },
+      "id": "node-notify-lawyer",
+      "name": "6. Notificacion Inmediata al Abogado",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1180, 300]
+    }
+  ],
+  "connections": {
+    "1. Recepcion de Demanda (PDF / Escaneo)": {
+      "main": [
+        [
+          {
+            "node": "2. Gemini 2.5 Flash (OCR Vision y Extraccion Rapida)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Gemini 2.5 Flash (OCR Vision y Extraccion Rapida)": {
+      "main": [
+        [
+          {
+            "node": "3. Enrutador Inteligente (Complejidad)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Enrutador Inteligente (Complejidad)": {
+      "main": [
+        [
+          {
+            "node": "4. Tier de Razonamiento Profundo (Gemini 2.5 Pro - Senado Legal)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "5. Tier Rapido (Ficha de Tramite Ordinario)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Tier de Razonamiento Profundo (Gemini 2.5 Pro - Senado Legal)": {
+      "main": [
+        [
+          {
+            "node": "6. Notificacion Inmediata al Abogado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Tier Rapido (Ficha de Tramite Ordinario)": {
+      "main": [
+        [
+          {
+            "node": "6. Notificacion Inmediata al Abogado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
