@@ -16,6 +16,7 @@ from .academy import (
 from .alimony import (
     APPOINTMENT_CHANNELS,
     DEPOSIT_STAGES,
+    PJENL_INFORMATICS_LIBRARY,
     PJENL_OFFICIAL_CHANNELS,
     AlimonyDepositError,
     AlimonyDepositRecord,
@@ -126,6 +127,7 @@ __all__ = [
     "Matter",
     "MockAuthority",
     "NotificationError",
+    "PJENL_INFORMATICS_LIBRARY",
     "PJENL_OFFICIAL_CHANNELS",
     "REQUIRED_TASK_FIELDS",
     "Receipt",

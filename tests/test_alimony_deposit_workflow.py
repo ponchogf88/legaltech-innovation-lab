@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from legal_engine.alimony import (
+    PJENL_INFORMATICS_LIBRARY,
     PJENL_OFFICIAL_CHANNELS,
     AlimonyDepositError,
     create_alimony_deposit_record,
@@ -74,3 +75,22 @@ def test_alimony_deposit_rejects_pii_and_invalid_channels() -> None:
 
     with pytest.raises(AlimonyDepositError, match="channel"):
         create_alimony_deposit_record(_sample_deposit_payload(channel="CANAL_DESCONOCIDO"))
+
+
+def test_pjenl_informatics_library_completeness() -> None:
+    pillars = {item["id"]: item for item in PJENL_INFORMATICS_LIBRARY["normative_pillars"]}
+    for required_id in (
+        "CPCNL-TV-44-87",
+        "TV-CONVENIO-PDF",
+        "ACUERDO-4-II-2014",
+        "ACUERDO-1-II-2024",
+        "ACUERDO-1-II-2025-FEJUD",
+        "ACUERDO-2-II-2025-SOBRE",
+        "ACUERDO-7-2022-NO-PARTES",
+    ):
+        assert required_id in pillars
+
+    capabilities = PJENL_INFORMATICS_LIBRARY["power_user_capabilities"]
+    assert len(capabilities) == 10
+    assert any("Sobre Electrónico de Posiciones" in item["title"] for item in capabilities)
+    assert PJENL_INFORMATICS_LIBRARY["training_and_support"]["helpdesk_email"] == "cst@pjenl.gob.mx"
