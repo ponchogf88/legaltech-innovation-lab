@@ -30,10 +30,17 @@ _ALLOWED_SYNTHETIC_RFCS: frozenset[str] = frozenset({
     "XEXX010101000",
 })
 
-_RFC_RE = re.compile(r"(?<![A-ZÑ&0-9])([A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3})(?![A-ZÑ&0-9])")
-_CURP_RE = re.compile(r"\b[A-Z][AEIOUX][A-Z]{2}\d{6}[HM][A-Z]{5}[A-Z0-9]\d\b")
-# Negative lookaround around dots avoids false positives on high-precision floats.
-_CLABE_RE = re.compile(r"(?<![\d.])\b\d{18}\b(?!\.)")
+_RFC_RE = re.compile(
+    r"(?<![A-ZÑ&0-9])([A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3})(?![A-ZÑ&0-9])",
+    flags=re.IGNORECASE,
+)
+_CURP_RE = re.compile(
+    r"\b[A-Z][AEIOUX][A-Z]{2}\d{6}[HM][A-Z]{5}[A-Z0-9]\d\b",
+    flags=re.IGNORECASE,
+)
+# Negative lookaround around dots avoids false positives on high-precision floats;
+# [ -]? allows catching 18-digit CLABEs obfuscated with spaces or hyphens.
+_CLABE_RE = re.compile(r"(?<![\d.])\b(?:\d[ -]?){17}\d\b(?!\.)")
 
 
 def _compile_fragments(
@@ -139,7 +146,7 @@ class SecurityViolationError(ValueError):
 def _has_non_synthetic_rfc(text: str) -> bool:
     """Return True if text contains a Mexican RFC outside the synthetic allowlist."""
     return any(
-        match.group(1) not in _ALLOWED_SYNTHETIC_RFCS
+        match.group(1).upper() not in _ALLOWED_SYNTHETIC_RFCS
         for match in _RFC_RE.finditer(text)
     )
 

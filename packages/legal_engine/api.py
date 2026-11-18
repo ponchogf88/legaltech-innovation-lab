@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from datetime import datetime, timezone
+import hmac
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 from pathlib import Path
@@ -32,6 +33,38 @@ except ImportError:  # pragma: no cover - optional prior to Workstream C merge
     SecurityViolationError = _MissingSecurityError  # type: ignore[assignment, misc]
 
 _SUBMISSION_ACTION_RE = re.compile(r"^/api/submissions/([^/]+)/(review|approve|reject|submit)$")
+MAX_REQUEST_BODY_BYTES = 1_048_576  # 1 MiB DoS cap
+_ALLOWED_ORIGIN_RE = re.compile(
+    r"^(?:https?://(?:127\.0\.0\.1|localhost)(?::\d+)?|https://ponchogf88\.github\.io)$"
+)
+
+
+def _resolve_allowed_origin(origin: str | None) -> str | None:
+    """Return the validated Origin when permitted by local/GitHub-Pages policy, else None."""
+    if not origin:
+        return None
+    clean_origin = origin.strip()
+    if _ALLOWED_ORIGIN_RE.fullmatch(clean_origin):
+        return clean_origin
+    extra = os.environ.get("LEGAL_LAB_ALLOWED_ORIGIN", "").strip()
+    if extra and clean_origin == extra:
+        return clean_origin
+    return None
+
+
+def _parse_content_length(raw_header: str | None, max_bytes: int = MAX_REQUEST_BODY_BYTES) -> int:
+    """Validate Content-Length integer header and enforce max payload size."""
+    if raw_header is None or not raw_header.strip():
+        return 0
+    try:
+        parsed = int(raw_header.strip())
+    except ValueError as exc:
+        raise ValueError("Invalid Content-Length header.") from exc
+    if parsed < 0:
+        raise ValueError("Content-Length cannot be negative.")
+    if parsed > max_bytes:
+        raise OverflowError(f"Request body exceeds maximum allowed {max_bytes} bytes.")
+    return parsed
 
 
 def format_sse_event(event: str, data: dict[str, Any], event_id: str | None = None) -> str:
@@ -334,26 +367,55 @@ def _make_handler(
     class LegalEngineHTTPHandler(BaseHTTPRequestHandler):
         server_version = "LegalEngineHTTP/0.1"
 
+        def _write_cors_headers(self) -> None:
+            allowed_origin = _resolve_allowed_origin(self.headers.get("Origin"))
+            if allowed_origin is not None:
+                self.send_header("Access-Control-Allow-Origin", allowed_origin)
+                self.send_header("Vary", "Origin")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-LegalLab-Token")
+
+        def _reject_disallowed_origin_if_present(self) -> bool:
+            raw_origin = self.headers.get("Origin")
+            if raw_origin is not None and _resolve_allowed_origin(raw_origin) is None:
+                self._send_json(
+                    403,
+                    {"error": "Untrusted CORS Origin blocked.", "code": "cors_origin_denied"},
+                )
+                return True
+            return False
+
+        def _is_authorized_mutation(self, clean_path: str) -> bool:
+            expected_token = os.environ.get("LEGAL_LAB_API_TOKEN", "").strip()
+            if not expected_token or _SUBMISSION_ACTION_RE.fullmatch(clean_path) is None:
+                return True
+            provided = self.headers.get("X-LegalLab-Token", "").strip()
+            if not provided:
+                auth_header = self.headers.get("Authorization", "").strip()
+                if auth_header.lower().startswith("bearer "):
+                    provided = auth_header[7:].strip()
+            return bool(provided) and hmac.compare_digest(provided, expected_token)
+
         def _send_json(self, status_code: int, payload: dict[str, Any]) -> None:
             raw = json.dumps(payload, ensure_ascii=False).encode("utf-8")
             self.send_response(status_code)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(raw)))
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-            self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self._write_cors_headers()
             self.end_headers()
             self.wfile.write(raw)
 
         def do_OPTIONS(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler naming
+            if self._reject_disallowed_origin_if_present():
+                return
             self.send_response(204)
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-            self.send_header("Access-Control-Allow-Headers", "Content-Type")
+            self._write_cors_headers()
             self.send_header("Content-Length", "0")
             self.end_headers()
 
         def do_GET(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler naming
+            if self._reject_disallowed_origin_if_present():
+                return
             clean_path = urlparse(self.path).path.rstrip("/") or "/"
             status, body = handle_api_request("GET", self.path, None, repo, queue, audit)
             if clean_path == "/api/events/stream" and status == 200:
@@ -361,7 +423,7 @@ def _make_handler(
                 self.send_response(status)
                 self.send_header("Content-Type", "text/event-stream; charset=utf-8")
                 self.send_header("Cache-Control", "no-cache")
-                self.send_header("Access-Control-Allow-Origin", "*")
+                self._write_cors_headers()
                 self.send_header("Content-Length", str(len(raw)))
                 self.end_headers()
                 self.wfile.write(raw)
@@ -369,7 +431,25 @@ def _make_handler(
             self._send_json(status, body)
 
         def do_POST(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler naming
-            content_length = int(self.headers.get("Content-Length") or 0)
+            if self._reject_disallowed_origin_if_present():
+                return
+            clean_path = urlparse(self.path).path.rstrip("/") or "/"
+            if not self._is_authorized_mutation(clean_path):
+                self._send_json(
+                    401,
+                    {"error": "Missing or invalid API bearer token.", "code": "unauthorized"},
+                )
+                return
+
+            try:
+                content_length = _parse_content_length(self.headers.get("Content-Length"))
+            except ValueError as exc:
+                self._send_json(400, {"error": str(exc), "code": "invalid_content_length"})
+                return
+            except OverflowError as exc:
+                self._send_json(413, {"error": str(exc), "code": "payload_too_large"})
+                return
+
             payload: dict[str, Any] | None = {}
             if content_length > 0:
                 raw_body = self.rfile.read(content_length)

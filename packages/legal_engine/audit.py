@@ -2,12 +2,24 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
 import threading
 from typing import Any
+
+try:
+    import fcntl
+except ImportError:  # pragma: no cover - Windows fallback
+    fcntl = None  # type: ignore[assignment]
+
+try:
+    import msvcrt
+except ImportError:  # pragma: no cover - POSIX path
+    msvcrt = None  # type: ignore[assignment]
 
 GENESIS_HASH = "0" * 64
 _REQUIRED_FIELDS = frozenset(
@@ -22,11 +34,38 @@ def _compute_entry_hash(payload: dict[str, Any]) -> str:
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
+@contextmanager
+def _interprocess_file_lock(lock_path: Path) -> Iterator[None]:
+    """Acquire an OS-level advisory exclusive lock across processes (POSIX + Windows)."""
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a+", encoding="utf-8") as lock_handle:
+        if fcntl is not None:
+            fcntl.flock(lock_handle.fileno(), fcntl.LOCK_EX)
+            try:
+                yield
+            finally:
+                fcntl.flock(lock_handle.fileno(), fcntl.LOCK_UN)
+        elif msvcrt is not None:  # pragma: no cover - Windows-only advisory lock
+            lock_handle.seek(0)
+            lock_handle.write("\0")
+            lock_handle.flush()
+            lock_handle.seek(0)
+            msvcrt.locking(lock_handle.fileno(), msvcrt.LK_LOCK, 1)
+            try:
+                yield
+            finally:
+                lock_handle.seek(0)
+                msvcrt.locking(lock_handle.fileno(), msvcrt.LK_UNLCK, 1)
+        else:  # pragma: no cover - platform without flock/msvcrt
+            yield
+
+
 class AuditLog:
     """Append-only JSONL audit log with SHA-256 prev_hash/entry_hash chaining."""
 
     def __init__(self, path: Path | str) -> None:
         self.path = Path(path)
+        self._lock_path = self.path.with_name(f"{self.path.name}.lock")
         self._lock = threading.Lock()
 
     def _last_hash_unlocked(self) -> str:
@@ -53,7 +92,7 @@ class AuditLog:
         details: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Append a cryptographically chained audit event and return the written entry."""
-        with self._lock:
+        with self._lock, _interprocess_file_lock(self._lock_path):
             prev_hash = self._last_hash_unlocked()
             entry: dict[str, Any] = {
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -76,39 +115,45 @@ class AuditLog:
         with self._lock:
             if not self.path.exists():
                 return []
-            entries: list[dict[str, Any]] = []
-            with self.path.open("r", encoding="utf-8") as handle:
-                for raw_line in handle:
-                    stripped = raw_line.strip()
-                    if stripped:
-                        entries.append(json.loads(stripped))
-            return entries
+            with _interprocess_file_lock(self._lock_path):
+                if not self.path.exists():
+                    return []
+                entries: list[dict[str, Any]] = []
+                with self.path.open("r", encoding="utf-8") as handle:
+                    for raw_line in handle:
+                        stripped = raw_line.strip()
+                        if stripped:
+                            entries.append(json.loads(stripped))
+                return entries
 
     def verify_integrity(self) -> bool:
         """Verify the full SHA-256 hash chain from GENESIS_HASH through every line."""
         with self._lock:
             if not self.path.exists():
                 return True
+            with _interprocess_file_lock(self._lock_path):
+                if not self.path.exists():
+                    return True
 
-            expected_prev_hash = GENESIS_HASH
-            try:
-                with self.path.open("r", encoding="utf-8") as handle:
-                    for raw_line in handle:
-                        stripped = raw_line.strip()
-                        if not stripped:
-                            continue
-                        entry = json.loads(stripped)
-                        if not isinstance(entry, dict):
-                            return False
-                        if not _REQUIRED_FIELDS.issubset(entry.keys()):
-                            return False
-                        if entry.get("prev_hash") != expected_prev_hash:
-                            return False
-                        computed = _compute_entry_hash(entry)
-                        if entry.get("entry_hash") != computed:
-                            return False
-                        expected_prev_hash = entry["entry_hash"]
-            except (OSError, json.JSONDecodeError, TypeError, ValueError):
-                return False
+                expected_prev_hash = GENESIS_HASH
+                try:
+                    with self.path.open("r", encoding="utf-8") as handle:
+                        for raw_line in handle:
+                            stripped = raw_line.strip()
+                            if not stripped:
+                                continue
+                            entry = json.loads(stripped)
+                            if not isinstance(entry, dict):
+                                return False
+                            if not _REQUIRED_FIELDS.issubset(entry.keys()):
+                                return False
+                            if entry.get("prev_hash") != expected_prev_hash:
+                                return False
+                            computed = _compute_entry_hash(entry)
+                            if entry.get("entry_hash") != computed:
+                                return False
+                            expected_prev_hash = entry["entry_hash"]
+                except (OSError, json.JSONDecodeError, TypeError, ValueError):
+                    return False
 
-            return True
+                return True
