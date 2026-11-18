@@ -1,0 +1,9 @@
+{
+  "name": "LegalTech Innovation Lab",
+  "short_name": "LegalTech Lab",
+  "start_url": "./app_legaltech.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#2563eb",
+  "description": "Plataforma Jurídica Autónoma con Consejo Legal y Despacho a Tribunal Virtual"
+}

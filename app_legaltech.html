@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LegalTech Innovation Lab — Plataforma Jurídica Autónoma</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#020617">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            border: "hsl(217.2 32.6% 17.5%)",
+            background: "hsl(222.2 84% 4.9%)",
+            foreground: "hsl(210 40% 98%)",
+            card: "hsl(222.2 84% 6.5%)",
+            primary: {
+              DEFAULT: "hsl(217.2 91.2% 59.8%)",
+              foreground: "hsl(222.2 47.4% 11.2%)"
+            },
+            muted: {
+              DEFAULT: "hsl(217.2 32.6% 15%)",
+              foreground: "hsl(215 20.2% 65.1%)"
+            },
+            accent: {
+              DEFAULT: "hsl(217.2 32.6% 17.5%)",
+              foreground: "hsl(210 40% 98%)"
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .glass { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+    .glow-blue { box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.3); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Header / Navigation Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+          <i class="fa-solid fa-feather-pointed text-xl"></i>
+        </div>
+        <div>
+          <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">LegalTech Innovation Lab</span>
+          <span class="text-xs ml-2 px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">v1.0 • Argon Orchestrator + Swarm</span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2 text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Argon Activo • Enjambre de 5 Subagentes Listo</span>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs text-slate-300 font-semibold">
+          AG
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
+
+    <!-- Hero / Metrics Bar -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Expedientes en Ingesta</p>
+          <h3 class="text-2xl font-bold mt-1 text-white">12 Casos</h3>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+      </div>
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Términos Próximos</p>
+          <h3 class="text-2xl font-bold mt-1 text-amber-400">3 Fatales</h3>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+      </div>
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Honorarios Cotizados</p>
+          <h3 class="text-2xl font-bold mt-1 text-emerald-400">$64,500 MXN</h3>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-receipt"></i>
+        </div>
+      </div>
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Tribunal Virtual</p>
+          <h3 class="text-2xl font-bold mt-1 text-indigo-400">En Línea (Sincronizado)</h3>
+        </div>
+        <div class="w-11 h-11 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-scale-balanced"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Argon Auto-Pilot Control Bar -->
+    <div class="rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 p-5 shadow-xl glow-blue">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 text-[11px] font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded font-mono">ARGON AUTO-PILOT</span>
+            <span id="autopilotStatus" class="text-xs text-slate-300 font-medium">Secuencia autónoma lista • Esperando caso</span>
+          </div>
+          <p class="text-[11px] text-slate-400">1. Ingesta &amp; OCR → 2. Cotización Fase 1 → 3. Enjambre en Paralelo → 4. Síntesis Muse &amp; Puerta Humana</p>
+        </div>
+        <button onclick="runArgonAutoPilot()" id="autopilotBtn" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/25 flex items-center justify-center gap-2 transition shrink-0">
+          <i class="fa-solid fa-play"></i>
+          ▶ Ejecutar Flujo Autónomo (Argon Auto-Pilot)
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Workspace Split: Left (Ingestion & Quoting) - Right (The Council & Analysis) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <!-- LEFT COLUMN: Ingestion Hub & Quoting Tool (5 Cols) -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <!-- Ingestion Hub Card -->
+        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-6 shadow-xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-semibold text-white flex items-center gap-2">
+              <i class="fa-solid fa-cloud-arrow-up text-blue-400"></i>
+              Buzón Multimodal Omnicanal
+            </h2>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded">OCR Activo</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Arrastra notificaciones, demandas (PDF), audios de WhatsApp o capturas de pruebas.</p>
+
+          <!-- Drop Area -->
+          <div id="dropArea" onclick="runArgonAutoPilot()" class="border-2 border-dashed border-slate-700 hover:border-blue-500 rounded-xl p-8 text-center transition cursor-pointer bg-slate-950/40 group">
+            <div class="w-14 h-14 rounded-full bg-slate-800/80 group-hover:bg-blue-600/20 text-slate-400 group-hover:text-blue-400 flex items-center justify-center mx-auto mb-3 transition">
+              <i class="fa-solid fa-file-invoice text-2xl"></i>
+            </div>
+            <p class="text-sm font-medium text-slate-200">Suelta aquí tu expediente o haz clic para subir</p>
+            <p class="text-xs text-slate-500 mt-1">PDF, JPG, PNG, MP3, WAV, OGG (Hasta 100MB)</p>
+          </div>
+
+          <!-- Quick Audio Dictation -->
+          <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <button id="micBtn" class="w-9 h-9 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 flex items-center justify-center transition">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <div class="text-xs">
+                <p class="font-medium text-slate-200">Dictado Rápido del Abogado</p>
+                <p class="text-slate-500">Graba notas de voz posteriores a llamadas</p>
+              </div>
+            </div>
+            <span id="recordTimer" class="text-xs font-mono text-slate-500">00:00</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Quoting Engine (Cotizador Preliminar) -->
+        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-semibold text-white flex items-center gap-2">
+              <i class="fa-solid fa-calculator text-emerald-400"></i>
+              Cotizador de Estudio Inicial
+            </h2>
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono">Fase 1</span>
+          </div>
+
+          <div class="space-y-4 text-xs">
+            <!-- Fojas Slider -->
+            <div>
+              <div class="flex justify-between text-slate-300 mb-1">
+                <span>Volumen de Fojas:</span>
+                <span id="fojasVal" class="font-semibold text-white font-mono">35 fojas</span>
+              </div>
+              <input id="fojasInput" type="range" min="1" max="200" value="35" class="w-full accent-blue-500 cursor-pointer">
+            </div>
+
+            <!-- Audio Slider -->
+            <div>
+              <div class="flex justify-between text-slate-300 mb-1">
+                <span>Audios / Entrevistas:</span>
+                <span id="audioVal" class="font-semibold text-white font-mono">15 minutos</span>
+              </div>
+              <input id="audioInput" type="range" min="0" max="120" value="15" class="w-full accent-blue-500 cursor-pointer">
+            </div>
+
+            <!-- Urgencia Toggle -->
+            <div class="flex items-center justify-between p-3 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div>
+                <p class="font-medium text-slate-200">Término de Urgencia (< 48 hrs)</p>
+                <p class="text-slate-500 text-[11px]">Aplica recargo por trabajo inmediato</p>
+              </div>
+              <input id="urgenciaToggle" type="checkbox" class="w-4 h-4 accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Price Output Box -->
+            <div class="p-4 rounded-xl bg-gradient-to-br from-slate-950 to-slate-900 border border-slate-800 flex items-center justify-between">
+              <div>
+                <p class="text-[11px] text-slate-400 uppercase tracking-wider">Honorarios de Estudio Sugeridos</p>
+                <h4 id="precioFinal" class="text-2xl font-bold text-emerald-400 font-mono mt-0.5">$3,500 MXN</h4>
+              </div>
+              <button onclick="copiarPropuesta()" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-paper-plane"></i>
+                Enviar Cotización
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: The Historical Council & Case Room (7 Cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- Active Case Card -->
+        <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-6 shadow-xl">
+          <div class="flex items-start justify-between pb-4 border-b border-slate-800">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="px-2 py-0.5 text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded">Juicio Ejecutivo Mercantil</span>
+                <span class="text-xs text-slate-400 font-mono">Exp. 418/2026 • Juzgado 2° Oral</span>
+              </div>
+              <h2 class="text-lg font-bold text-white">Demanda de Cobro de Pagaré ($350,000 MXN)</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Notificado el 17/Nov/2026 • Término: <span class="text-amber-400 font-semibold font-mono">7 días hábiles restantes</span></p>
+            </div>
+            <button onclick="enviarTribunal()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-blue-600/20 flex items-center gap-2 transition">
+              <i class="fa-solid fa-bolt"></i>
+              Mercurio: Despacho a Tribunal
+            </button>
+          </div>
+
+          <!-- Council Persona Tabs -->
+          <div class="mt-6">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Deliberación del Senado Jurídico</p>
+            
+            <div class="grid grid-cols-4 gap-2 mb-4">
+              <button onclick="selectAdvisor('sherlock')" id="tab-sherlock" class="advisor-tab px-3 py-2 rounded-xl border border-blue-500/40 bg-blue-500/10 text-blue-400 text-xs font-medium flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-magnifying-glass"></i> Sherlock
+              </button>
+              <button onclick="selectAdvisor('suntzu')" id="tab-suntzu" class="advisor-tab px-3 py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-scroll"></i> Sun Tzu
+              </button>
+              <button onclick="selectAdvisor('atenea')" id="tab-atenea" class="advisor-tab px-3 py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-shield-halved"></i> Atenea
+              </button>
+              <button onclick="selectAdvisor('alex')" id="tab-alex" class="advisor-tab px-3 py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-khanda"></i> Alejandro
+              </button>
+            </div>
+
+            <!-- Advisor Strategy Output Box -->
+            <div id="advisorContent" class="p-5 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs space-y-3 leading-relaxed">
+              <div class="flex items-center gap-2 text-blue-400 font-semibold">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Sherlock Holmes • Auditoría de Evidencias e Indicios</span>
+              </div>
+              <p class="text-slate-300">
+                "He cotejado el pagaré exhibido con el audio de WhatsApp de tu cliente. <strong>Inconsistencia crítica encontrada:</strong> La fecha de vencimiento escrita en el pagaré (Octubre 2024) muestra una tinta distinta y trazo forzado respecto a la firma original. Además, el endoso en procuración carece del sello de inscripción notarial. Procederemos con la objeción de documento por alteración material."
+              </p>
+              <div class="flex items-center gap-2 pt-2 border-t border-slate-800/60 text-slate-400 text-[11px]">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                <span>Tesis jurisprudencial vinculada: 2018492 (Alteración de título de crédito en blanco).</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Draft Section (Muse Summary) -->
+          <div class="mt-6 pt-5 border-t border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-feather text-indigo-400"></i>
+                Borrador de Contestación Generado por Muse (El Búho)
+              </span>
+              <span class="text-[11px] text-emerald-400 font-mono">100% Fundamentado</span>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 space-y-2 max-h-40 overflow-y-auto">
+              <p class="text-slate-500">// ESCRITO DE CONTESTACIÓN DE DEMANDA</p>
+              <p><strong>C. JUEZ SEGUNDO DE LO CIVIL Y ORALIDAD MERCANTIL:</strong></p>
+              <p>Comparezco en tiempo y forma legal a dar contestación a la improcedente demanda instaurada en mi contra, oponiendo las siguientes:</p>
+              <p class="text-amber-400"><strong>EXCEPCIÓN DE ALTERACIÓN DEL TEXTO DEL TÍTULO (Art. 8, Fracc. VI LGTOC):</strong> Se niega la autenticidad de la fecha pactada...</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Interactive Script -->
+  <script>
+    // Advisor content dictionary
+    const advisors = {
+      sherlock: {
+        title: "Sherlock Holmes • Auditoría de Evidencias e Indicios",
+        icon: "fa-magnifying-glass",
+        color: "text-blue-400",
+        border: "border-blue-500/40",
+        bg: "bg-blue-500/10",
+        text: "\"He cotejado el pagaré exhibido con el audio de WhatsApp de tu cliente. <strong>Inconsistencia crítica encontrada:</strong> La fecha de vencimiento escrita en el pagaré (Octubre 2024) muestra una tinta distinta y trazo forzado respecto a la firma original. Además, el endoso en procuración carece del sello de inscripción notarial. Procederemos con la objeción de documento por alteración material.\"",
+        tag: "Tesis jurisprudencial vinculada: 2018492 (Alteración de título de crédito en blanco)."
+      },
+      suntzu: {
+        title: "Sun Tzu • Psicología Procesal y Cálculo de Tiempos",
+        icon: "fa-scroll",
+        color: "text-emerald-400",
+        border: "border-emerald-500/40",
+        bg: "bg-emerald-500/10",
+        text: "\"El actor busca provocar una contestación apresurada para trabar el embargo en el domicilio particular. <strong>Estrategia de contra-ataque:</strong> Contesta en el día 6 del término para dejarlos sin tiempo de réplica en la audiencia preliminar, y consigna simultáneamente billete de depósito por la suerte reconocida para levantar cualquier providencia de secuestro.\"",
+        tag: "Principio de Guerra: Someter la ofensiva del actor antes de pisar el juzgado."
+      },
+      atenea: {
+        title: "Atenea • Ataque Frontal y Excepciones Procesales",
+        icon: "fa-shield-halved",
+        color: "text-violet-400",
+        border: "border-violet-500/40",
+        bg: "bg-violet-500/10",
+        text: "\"No nos limitaremos a defender. <strong>Interpondremos Reconvención (Contrademanda):</strong> Demandaremos daños y perjuicios por la cobranza extrajudicial indebida y la falsificación de fecha, solicitando que se le dé vista formal al Ministerio Público en el mismo auto de contestación.\"",
+        tag: "Ofensiva procesal directa para forzar a la parte actora a retirar la acción."
+      },
+      alex: {
+        title: "Alejandro Magno • Resolución Rápida (Nudo Gordiano)",
+        icon: "fa-khanda",
+        color: "text-amber-400",
+        border: "border-amber-500/40",
+        bg: "bg-amber-500/10",
+        text: "\"No permitamos un juicio desgastante de 2 años. Con el dictamen pericial de Sherlock sobre la tinta alterada y la amenaza penal de Atenea sobre la mesa, <strong>cortemos el nudo ahora:</strong> Presentemos una propuesta de convenio extrajudicial con quita del 70% pagadera en 48 horas bajo apercibimiento de denuncia penal.\"",
+        tag: "Resolución fulminante: Capitulación pactada en 48 horas."
+      }
+    };
+
+    function selectAdvisor(key) {
+      document.querySelectorAll('.advisor-tab').forEach(b => {
+        b.className = "advisor-tab px-3 py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center justify-center gap-2 transition";
+      });
+      const activeBtn = document.getElementById('tab-' + key);
+      const adv = advisors[key];
+      activeBtn.className = `advisor-tab px-3 py-2 rounded-xl border ${adv.border} ${adv.bg} ${adv.color} text-xs font-medium flex items-center justify-center gap-2 transition`;
+
+      const box = document.getElementById('advisorContent');
+      box.innerHTML = `
+        <div class="flex items-center gap-2 ${adv.color} font-semibold">
+          <i class="fa-solid ${adv.icon}"></i>
+          <span>${adv.title}</span>
+        </div>
+        <p class="text-slate-300 leading-relaxed">${adv.text}</p>
+        <div class="flex items-center gap-2 pt-2 border-t border-slate-800/60 text-slate-400 text-[11px]">
+          <span class="w-1.5 h-1.5 rounded-full ${adv.color.replace('text-', 'bg-')}"></span>
+          <span>${adv.tag}</span>
+        </div>
+      `;
+    }
+
+    // Dynamic Price Calculator
+    const fojasInput = document.getElementById('fojasInput');
+    const audioInput = document.getElementById('audioInput');
+    const urgenciaToggle = document.getElementById('urgenciaToggle');
+    const precioFinal = document.getElementById('precioFinal');
+    const fojasVal = document.getElementById('fojasVal');
+    const audioVal = document.getElementById('audioVal');
+
+    function calculateFee() {
+      const fojas = parseInt(fojasInput.value);
+      const audio = parseInt(audioInput.value);
+      const isUrgente = urgenciaToggle.checked;
+
+      fojasVal.innerText = fojas + " fojas";
+      audioVal.innerText = audio + " minutos";
+
+      let base = 1500;
+      if (fojas > 30 && fojas <= 100) base = 3500;
+      else if (fojas > 100) base = 3500 + (fojas - 100) * 25;
+
+      if (audio > 15 && audio <= 60) base += 500;
+      else if (audio > 60) base += 1000;
+
+      if (isUrgente) base = base * 1.5;
+
+      precioFinal.innerText = "$" + Math.round(base).toLocaleString('es-MX') + " MXN";
+    }
+
+    fojasInput.addEventListener('input', calculateFee);
+    audioInput.addEventListener('input', calculateFee);
+    urgenciaToggle.addEventListener('change', calculateFee);
+
+    function copiarPropuesta() {
+      alert("✅ Enlace de cotización y propuesta generado. Copiado al portapapeles listo para enviar por WhatsApp al cliente.");
+    }
+
+    function enviarTribunal() {
+      alert("⚡ Mercurio: Radicando escrito formal en el Tribunal Virtual con firma electrónica certificada. Acuse con folio 84920 generado.");
+    }
+
+    function runArgonAutoPilot() {
+      const status = document.getElementById('autopilotStatus');
+      const btn = document.getElementById('autopilotBtn');
+      if (btn) btn.disabled = true;
+      status.innerText = "⚡ Etapa 1/4: Ingesta Multimodal y OCR extrayendo fojas y sellos...";
+      fojasInput.value = 68;
+      audioInput.value = 25;
+      urgenciaToggle.checked = true;
+      calculateFee();
+      setTimeout(() => {
+        status.innerText = "🧠 Etapa 2/4: Sherlock y Sun Tzu auditando pruebas y plazos fatales...";
+        selectAdvisor('sherlock');
+      }, 900);
+      setTimeout(() => {
+        selectAdvisor('suntzu');
+      }, 1800);
+      setTimeout(() => {
+        status.innerText = "🛡️ Etapa 3/4: Atenea y Alejandro formulando reconvención y convenio...";
+        selectAdvisor('atenea');
+      }, 2700);
+      setTimeout(() => {
+        selectAdvisor('alex');
+      }, 3600);
+      setTimeout(() => {
+        status.innerText = "✅ Etapa 4/4: Flujo Autónomo Completado ($6,000 MXN cotizados). Solo espera tu visto bueno.";
+        if (btn) btn.disabled = false;
+      }, 4500);
+    }
+  </script>
+</body>
+</html>
