@@ -1,11 +1,11 @@
 {
   "protocol_version": "1.0.0",
-  "sequence_number": 6,
-  "last_updated_utc": "2026-11-19T16:30:34Z",
+  "sequence_number": 7,
+  "last_updated_utc": "2026-11-19T16:34:06Z",
   "last_updated_by_node": "MAC_COMMAND_CENTER",
   "next_assigned_node": "DELL_WINDOWS_LAB",
-  "active_ping_id": "PING-MAC-TO-DELL-REGIO-001",
-  "expected_echo_command": ".venv/bin/python -m legal_engine.cli handoff --from-node DELL_WINDOWS_LAB --to-node MAC_COMMAND_CENTER --ping-id PONG-PING-MAC-TO-DELL-REGIO-001 --note \"Confirmed sync on DELL_WINDOWS_LAB\"",
+  "active_ping_id": "PING-MAC-TO-DELL-REGIO-002",
+  "expected_echo_command": ".venv/bin/python -m legal_engine.cli handoff --from-node DELL_WINDOWS_LAB --to-node MAC_COMMAND_CENTER --ping-id PONG-PING-MAC-TO-DELL-REGIO-002 --note \"Confirmed sync on DELL_WINDOWS_LAB\"",
   "requires_owner_review": false,
   "recommended_dell_orchestrator": {
     "primary_orchestrator": "Gemini 4 Argon (Max)",
@@ -14,8 +14,8 @@
   },
   "git_snapshot": {
     "branch": "dev/mission-002",
-    "commit": "244688a793b389b344ce48249c29b6f22683358c",
-    "short_commit": "244688a"
+    "commit": "6b48e8f0e4554d9418c2dc176d72487a1d208f04",
+    "short_commit": "6b48e8f"
   },
   "clock_reference": {
     "clock_id": "LEGALTECH-72H-MISSION-CLOCK",
@@ -29,10 +29,10 @@
     "auto_reset_allowed": false,
     "survives_restarts": true,
     "created_by_commit": "8d3ad92",
-    "evaluated_at_utc": "2026-11-19T16:30:34Z",
-    "elapsed_seconds": 332807,
+    "evaluated_at_utc": "2026-11-19T16:34:06Z",
+    "elapsed_seconds": 333019,
     "remaining_seconds": 0,
-    "elapsed_human": "92h 26m 47s",
+    "elapsed_human": "92h 30m 19s",
     "remaining_human": "00h 00m 00s",
     "progress_pct": 100.0,
     "is_expired": true
@@ -41,7 +41,7 @@
     "https://github.com/ponchogf88/legaltech-innovation-lab",
     "https://github.com/ponchogf88/laboratorio-asistente-ia"
   ],
-  "latest_instruction": "Sesion completa guardada en docs/BITACORA_CONVERSACION_CONTINUIDAD_MAC_WINDOWS.md, docs/BIBLIA_PROMPTS_GEMINI_REASONING_ROOM_EVANGELION.md y docs/personas/*.md; Regio Law Titanium/Liquid Glass + Reasoning Room listos (82/82 pytest).",
+  "latest_instruction": "Todo unificado en GitHub (main, dev/mission-002, gh-pages): Regio Law Titanium + Liquid Glass, Reasoning Room B&W Zero-Crop, jurisconsultosv1.jpeg, Router por delito + Manual Override, docs/personas/*.md y Marketing 9e83c4d (82/82 pytest).",
   "routines_for_dell": [
     {
       "routine_id": "ROUTINE-DELL-01",
@@ -155,6 +155,16 @@
       "commit": "244688a",
       "branch": "dev/mission-002",
       "note": "Sesion completa guardada en docs/BITACORA_CONVERSACION_CONTINUIDAD_MAC_WINDOWS.md, docs/BIBLIA_PROMPTS_GEMINI_REASONING_ROOM_EVANGELION.md y docs/personas/*.md; Regio Law Titanium/Liquid Glass + Reasoning Room listos (82/82 pytest)."
+    },
+    {
+      "sequence": 7,
+      "timestamp_utc": "2026-11-19T16:34:06Z",
+      "from_node": "MAC_COMMAND_CENTER",
+      "to_node": "DELL_WINDOWS_LAB",
+      "ping_id": "PING-MAC-TO-DELL-REGIO-002",
+      "commit": "6b48e8f",
+      "branch": "dev/mission-002",
+      "note": "Todo unificado en GitHub (main, dev/mission-002, gh-pages): Regio Law Titanium + Liquid Glass, Reasoning Room B&W Zero-Crop, jurisconsultosv1.jpeg, Router por delito + Manual Override, docs/personas/*.md y Marketing 9e83c4d (82/82 pytest)."
     }
   ]
 }
