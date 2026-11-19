@@ -5,11 +5,13 @@ from __future__ import annotations
 import pytest
 
 from legal_engine.router import (
+    ADVERSARIAL_ARCHETYPES,
     COUNCIL_PERSONAS,
     STRATA_CATALOG,
     UnknownTaskRouteError,
     list_council_personas,
     route_legal_task,
+    select_reasoning_room_avatars,
 )
 from legal_engine.security import SecurityViolationError
 
@@ -63,3 +65,37 @@ def test_smart_model_router_rejects_pii_and_unknown_inputs() -> None:
 
     with pytest.raises(UnknownTaskRouteError):
         route_legal_task("usura_analysis", persona_id="agente_inexistente")
+
+
+def test_reasoning_room_avatar_selection_by_case_type() -> None:
+    assert len(ADVERSARIAL_ARCHETYPES) == 5
+
+    org_crime = select_reasoning_room_avatars("agrupacion_delictuosa_contra_salud")
+    assert org_crime.lead_jurist["id"] == "ciceron"
+    assert org_crime.adversarial_avatar["id"] == "saul_goodman"
+    assert org_crime.secondary_avatar is not None
+    assert org_crime.secondary_avatar["id"] == "tony_montana"
+    assert "audífonos" in org_crime.headphone_advisory
+
+    homicide = select_reasoning_room_avatars("homicidio")
+    assert homicide.selection_mode == "AI_RECOMMENDED"
+    assert homicide.lead_jurist["id"] == "montesquieu"
+    assert homicide.adversarial_avatar["id"] == "abogado_diablo"
+
+    # Sovereign human lawyer override: pick Saul Goodman + Ulpiano even on a family matter
+    custom_family = select_reasoning_room_avatars(
+        "familiar",
+        override_lead_jurist_id="ulpiano",
+        override_adversarial_id="harvey_specter",
+    )
+    assert custom_family.selection_mode == "LAWYER_MANUAL_OVERRIDE"
+    assert custom_family.lead_jurist["id"] == "ulpiano"
+    assert custom_family.adversarial_avatar["id"] == "harvey_specter"
+    assert custom_family.dossier_md_path == "docs/personas/ESTRATO_IV_V_LENTES_MODERNOS_Y_ADVERSARIALES.md"
+
+    blocked_rfc = "GODE" + "561231" + "GR8"
+    with pytest.raises(SecurityViolationError, match="RFC_PATTERN"):
+        select_reasoning_room_avatars("homicidio", facts_preview=f"imputado rfc {blocked_rfc}")
+
+    with pytest.raises(UnknownTaskRouteError):
+        select_reasoning_room_avatars("materia_desconocida")

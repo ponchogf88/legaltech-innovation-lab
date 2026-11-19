@@ -10,6 +10,22 @@
   --bg-obsidian-hover: #262e2a;
   --border-dark: #2c3530;
 
+  /* Regio Law · Brushed Fundidora Titanium Steel & Liquid Glass */
+  --bg-titanium-brushed: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(135deg, #272b2e 0%, #15181a 46%, #1f2327 78%, #101214 100%);
+  --steel-border-specular: rgba(214, 221, 228, 0.24);
+  --steel-chrome-highlight: #d5dce3;
+  --liquid-glass-dark: rgba(18, 22, 24, 0.8);
+  --liquid-glass-light: rgba(250, 247, 240, 0.86);
+  --liquid-glass-blur: blur(20px) saturate(165%);
+  --liquid-glass-specular: inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+
   /* Parchment Warm Editorial Workspace */
   --bg-parchment: #f2ede2;
   --bg-parchment-elevated: #faf7f0;

@@ -769,3 +769,111 @@ export const COUNCIL_JURISTS = [
       'Planilla de cobranza B2B separada del expediente judicial y lista para conciliación.',
   },
 ];
+
+export const ADVERSARIAL_ARCHETYPES = [
+  {
+    id: 'saul_goodman',
+    name: 'Saul Goodman',
+    stratumLabel: 'Estrato V · Estrategia Procesal Creativa & Salidas Alternas',
+    silhouetteKind: 'advocate_suit',
+    reasoningTone:
+      'Detección veloz de vicios del IPH, caducidad, medidas cautelares no privativas y salidas alternas lícitas (CNPP).',
+    ethicalGuardrail:
+      'Controlado por Temis/HITL: exclusión de prueba ilícita y salidas legales; prohíbe fabricación de hechos.',
+    dossierPath: 'docs/personas/ESTRATO_IV_V_LENTES_MODERNOS_Y_ADVERSARIALES.md',
+  },
+  {
+    id: 'abogado_diablo',
+    name: 'El Abogado del Diablo',
+    stratumLabel: 'Estrato V · Litigio Penal Grave, Privación de la Vida & Duda Razonable',
+    silhouetteKind: 'devils_advocate',
+    reasoningTone:
+      'Demolición retórica de imputaciones de dolo, análisis clínico de necropsia/balística, legítima defensa y control constitucional (arts. 14, 16 y 20 CPEUM).',
+    ethicalGuardrail:
+      'Escrutinio máximo de presunción de inocencia y exclusión de prueba ilícita bajo supervisión del defensor humano.',
+    dossierPath: 'docs/personas/ESTRATO_IV_V_LENTES_MODERNOS_Y_ADVERSARIALES.md',
+  },
+  {
+    id: 'tony_montana',
+    name: 'Arquetipo Tony Montana (Red Team)',
+    stratumLabel: 'Estrato V · Lente Adversarial en Agrupación Delictuosa / Contra la Salud',
+    silhouetteKind: 'redteam_monolith',
+    reasoningTone:
+      'Simulación anticipada de hipótesis acusatorias de coautoría, posesión vs. comercio y extinción de dominio para blindar la defensa constitucional.',
+    ethicalGuardrail:
+      'Prohibición absoluta de asesoría ilícita: solo simulación defensiva Red Team y cumplimiento preventivo.',
+    dossierPath: 'docs/personas/ESTRATO_IV_V_LENTES_MODERNOS_Y_ADVERSARIALES.md',
+  },
+  {
+    id: 'harvey_specter',
+    name: 'Harvey Specter',
+    stratumLabel: 'Estrato V · Negociación Ejecutiva & Cierre Corporativo',
+    silhouetteKind: 'advocate_suit',
+    reasoningTone:
+      'Apalancamiento táctico pre-embargo y cierre de convenios mercantiles/societarios favorables sin desgaste prolongado.',
+    ethicalGuardrail:
+      'Liquidación exacta validada por Fray Luca Pacioli y firma del socio responsable.',
+    dossierPath: 'docs/personas/ESTRATO_IV_V_LENTES_MODERNOS_Y_ADVERSARIALES.md',
+  },
+  {
+    id: 'annalise_keating',
+    name: 'Annalise Keating',
+    stratumLabel: 'Estrato V · Contrainterrogatorio Oral & Exclusión Probatoria',
+    silhouetteKind: 'robe_trial',
+    reasoningTone:
+      'Exhibición clínica de contradicciones de testigos hostiles, peritos y cadena de custodia en audiencia de juicio oral.',
+    ethicalGuardrail:
+      'Apego estricto a ética procesal y separación entre hecho verificado (`extracted_fact`) e hipótesis.',
+    dossierPath: 'docs/personas/ESTRATO_IV_V_LENTES_MODERNOS_Y_ADVERSARIALES.md',
+  },
+];
+
+export const CASE_TYPE_AVATAR_ROUTES = [
+  {
+    id: 'mercantil_usura_adulto_mayor',
+    label: 'Mercantil · Pagarés Alterados / Usura',
+    recommendedJuristId: 'ulpiano',
+    guardianJuristId: 'atenea',
+    recommendedAdversarialId: 'harvey_specter',
+    audioPreset: 'Piano neoclásico en modo menor · silencio acústico controlado',
+    protocolSummary:
+      'Reducción oficiosa de intereses usurarios (Ulpiano + Pacioli), pericial documental y apalancamiento ejecutivo.',
+  },
+  {
+    id: 'familiar_alimentos_billete',
+    label: 'Familiar · Alimentos, Citas UAPA & Billetes',
+    recommendedJuristId: 'atenea',
+    guardianJuristId: 'hermes',
+    recommendedAdversarialId: 'saul_goodman',
+    audioPreset: 'Frecuencia contemplativa neutra · foco claro con audífonos',
+    protocolSummary:
+      'Oficios electrónicos directos a empleadores (Acuerdos 7/2022 y 8/2022 PJENL), cita UAPA (81-8366-6781) y comparecencia ágil.',
+  },
+  {
+    id: 'agrupacion_delictuosa_contra_salud',
+    label: 'Penal · Agrupación Delictuosa / Contra la Salud',
+    recommendedJuristId: 'ciceron',
+    guardianJuristId: 'temis',
+    recommendedAdversarialId: 'tony_montana',
+    audioPreset: 'Synth ambiental oscuro de baja frecuencia · pulso lento forense',
+    protocolSummary:
+      'Red Team adversarial para anticipar imputación de coautoría/posesión y detectar vicios de IPH, cateo o cadena de custodia (combinable manualmente con Saul Goodman).',
+  },
+  {
+    id: 'privacion_vida_homicidio',
+    label: 'Penal Grave · Privación de la Vida / Homicidio',
+    recommendedJuristId: 'montesquieu',
+    guardianJuristId: 'temis',
+    recommendedAdversarialId: 'abogado_diablo',
+    audioPreset: 'Drone de cuerdas graves + lluvia lejana · concentración profunda',
+    protocolSummary:
+      'Cotejo estricto de necropsia/balística, legítima defensa, exclusión de prueba ilícita y estándar constitucional de duda razonable.',
+  },
+];
+
+export const GEMINI_MASTER_PROMPTS = {
+  planillaV2:
+    'Using the attached "jurisconsultosv1.jpeg" as the 5-column SEELE monolith layout & warm zenithal overhead lighting template, generate "PERSONAJES DEL UNIVERSO LEXIS — ESTRATO V: CONSEJO ADVERSARIAL" in stark dark charcoal BLACK-AND-WHITE MONOCHROME stone-spirit texture: (1) SAUL GOODMAN | Estrategia Procesal Creativa & Salidas Alternas, (2) EL ABOGADO DEL DIABLO | Defensa Penal Grave & Duda Razonable, (3) ARQUETIPO TONY MONTANA | Lente Red Team Agrupación & Cumplimiento, (4) HARVEY SPECTER | Negociación Corporativa, (5) ANNALISE KEATING | Contrainterrogatorio Oral. Zero typos, crisp Spanish subtitles.',
+  athenaFullBodyBW:
+    'Silent obsidian Reasoning Room portrait of ATHENA (Atenea) standing FULL-BODY HEAD-TO-TOE inside a pitch-black hall. 100% FULL-FRAME ZERO CROP: generous empty space above Corinthian helmet crest and below sculpted sandals resting on a dark stone plinth. Floor-length pleated Greek peplos gown cascading to her ankles, holding tall ceremonial trident upright with both top prongs and bottom butt fully inside frame. Pure stark BLACK-AND-WHITE MONOCHROME chiaroscuro spirit essence illuminated ONLY by a subtle warm zenithal overhead light shaft descending straight down (Neon Genesis Evangelion SEELE monolith council aesthetic). Zero text, zero color fill.',
+};

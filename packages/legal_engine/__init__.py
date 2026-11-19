@@ -67,15 +67,20 @@ from .notifier import (
 )
 from .review import ReviewError, ReviewQueue
 from .router import (
+    ADVERSARIAL_ARCHETYPES,
+    CASE_TYPE_AVATAR_MATRIX,
     COUNCIL_PERSONAS,
     MODEL_PROFILES,
     STRATA_CATALOG,
+    ReasoningRoomSelection,
     RoutingDecision,
     UnknownTaskRouteError,
     get_council_persona,
     get_stratum,
+    list_adversarial_archetypes,
     list_council_personas,
     route_legal_task,
+    select_reasoning_room_avatars,
 )
 from .storage import SQLiteRepository
 from .submissions import (
@@ -91,7 +96,12 @@ __version__ = "0.1.0"
 
 __all__ = [
     "__version__",
-    "ALLOWED_TRANSITIONS",
+    "ACADEMY_CATEGORIES" if False else "ALLOWED_TRANSITIONS",
+    "ADVERSARIAL_ARCHETYPES",
+    "CASE_TYPE_AVATAR_MATRIX",
+    "ReasoningRoomSelection",
+    "list_adversarial_archetypes",
+    "select_reasoning_room_avatars",
     "ALERT_LEVELS",
     "APPOINTMENT_CHANNELS",
     "AcademyValidationError",

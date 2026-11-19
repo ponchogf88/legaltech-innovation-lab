@@ -109,3 +109,15 @@ To uphold `Themis` and `Dike` epistemic boundaries inside the Command Center, **
 | **Header Badge** | `RECORD FACT · VERIFIED SOURCE` or `RECORD FACT · OCR UNVERIFIED` (`DM Mono`) | `LEGAL ANALYSIS · DRAFT INFERENCE (PRE-HITL)` (`DM Mono`) |
 | **Mandatory Attribution** | Inline `DM Mono` annex & page citation chip (e.g., `Annex A-01 · p. 3`) | Explicit reference to cited statutory norm and dependent fact IDs |
 | **Human Gate Affordance** | Reviewers verify OCR / documentary fidelity before approval | Reviewers sign off or reject analytical framing back to `DRAFT` |
+
+---
+
+## 6. Identidad `Regio Law` · Fundidora Brushed Titanium & Liquid Glass
+
+La firma estética de **Regio Law** fusiona la identidad industrial siderúrgica de **Monterrey (Parque Fundidora / Acero / Titanio Cepillado estilo Metal)** con superficies translúcidas **Liquid Glass** y luz cenital cálida en el **Reasoning Room**:
+
+| Token / Superficie (`tokens.css`) | Composición Material | Uso Estructural |
+| :--- | :--- | :--- |
+| **`--bg-titanium-brushed`** | Veta microscópica lineal horizontal + gradiente titanio `#272b2e` $\rightarrow$ `#101214` | Rail izquierdo, cabecera superior, tarjetas de telemetría del Router y marcos monolíticos SEELE. |
+| **`--liquid-glass-dark` / `--liquid-glass-light`** | Translucidez `rgba(...)` + `backdrop-filter: blur(20px) saturate(165%)` | Barra superior pegajosa (`.topbar`), cápsulas de inmersión sonora y superficies flotantes sin sacrificar contraste WCAG. |
+| **`--liquid-glass-specular`** | Borde especular superior (`inset 0 1px 0 rgba(255,255,255,0.26)`) + `--steel-border-specular` | Bisel metálico maquinado que evoca tarjetas de titanio cepillado sobre papel pergamino (`#f2ede2`) y cámara oscura monocromo (`#070809`). |

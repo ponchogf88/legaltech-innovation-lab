@@ -415,8 +415,10 @@ export default function App() {
               <Scale size={16} strokeWidth={1.75} />
             </span>
             <div className="brand-copy">
-              <span className="brand-title">LegalTech Innovation Lab</span>
-              <span className="brand-subtitle">Command Center · {SYNTHETIC_CASE.caseId}</span>
+              <span className="brand-title">Regio Law · LegalTech Lab</span>
+              <span className="brand-subtitle">
+                Titanium &amp; Liquid Glass · Tribunal Virtual MTY · {SYNTHETIC_CASE.caseId}
+              </span>
             </div>
           </div>
         </div>
