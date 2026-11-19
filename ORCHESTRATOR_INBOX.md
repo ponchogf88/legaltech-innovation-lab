@@ -23,6 +23,7 @@ Al abrir este repositorio en cualquier máquina, ejecuta en orden:
 | **`ROUTINE-DELL-01`** | `M2-03` | Conectar los flujos n8n (`workflows/n8n/03..05_*.json`) y las alertas HITL con el puente SSE en tiempo real en `packages/legal_engine/api.py` hacia `apps/command-center/src/App.jsx`. | Endpoint SSE funcionando sin romper modo Sandbox Local ni `test_e2e_playwright.py`. |
 | **`ROUTINE-DELL-02`** | `M2-02` | Completar spans estructurados OpenTelemetry en `intake.py`, `documents.py`, `review.py`, `submissions.py` y `api.py` (cero PII en atributos). | Pruebas unitarias de telemetría pasando + `security-check` limpio (`6/6`). |
 | **`ROUTINE-DELL-03`** | `M2-05` | Implementar el **Cotizador Preliminar (Fase 1)** (`docs/dell_lab_sync/COTIZADOR_HONORARIOS_PRELIMINARES.md`) y el **Buzón Multimodal** (`BUZON_MULTIMODAL_OMNICANAL.md`) como módulos conectables sin romper los tests E2E existentes. | Nuevas pruebas verdes + `npm run build` + `pytest` al 100%. |
+| **`ROUTINE-DELL-04`** | `MKT-01` | **Marketing & LegalTech:** Ejecutar auditorías locales con `scripts/auditor_legal_web.py`, presentar propuesta de alianza con *Entre eclipse y condiciones* (`docs/dell_lab_sync/PROPUESTA_NEGOCIO_ENTRE_ECLIPSE_Y_CONDICIONES.md`), y producir la trilogía de videos *Ya Perdiste* (`docs/dell_lab_sync/PLAN_VIDEO_YA_PERDISTE.md`). | 10 reportes HTML de prueba generados + revisión de propuesta con socia + bitácora actualizada. |
 
 ---
 

@@ -1,11 +1,11 @@
 {
   "protocol_version": "1.0.0",
-  "sequence_number": 5,
-  "last_updated_utc": "2026-11-18T19:46:16Z",
+  "sequence_number": 6,
+  "last_updated_utc": "2026-11-19T14:38:00Z",
   "last_updated_by_node": "MAC_COMMAND_CENTER",
   "next_assigned_node": "DELL_WINDOWS_LAB",
-  "active_ping_id": "PONG-99ac384-HARDENED",
-  "expected_echo_command": ".venv/bin/python -m legal_engine.cli handoff --from-node DELL_WINDOWS_LAB --to-node MAC_COMMAND_CENTER --ping-id PONG-PONG-99ac384-HARDENED --note \"Confirmed sync on DELL_WINDOWS_LAB\"",
+  "active_ping_id": "PING-MAC-TO-DELL-MARKETING-001",
+  "expected_echo_command": ".venv/bin/python -m legal_engine.cli handoff --from-node DELL_WINDOWS_LAB --to-node MAC_COMMAND_CENTER --ping-id PONG-PING-MAC-TO-DELL-MARKETING-001 --note \"Confirmed sync of Marketing & LegalTech on DELL_WINDOWS_LAB\"",
   "requires_owner_review": false,
   "recommended_dell_orchestrator": {
     "primary_orchestrator": "Gemini 4 Argon (Max)",
@@ -14,8 +14,8 @@
   },
   "git_snapshot": {
     "branch": "dev/mission-002",
-    "commit": "f7750962de4270cbbfb89df587f91b41f42ffd19",
-    "short_commit": "f775096"
+    "commit": "505ba8c",
+    "short_commit": "505ba8c"
   },
   "clock_reference": {
     "clock_id": "LEGALTECH-72H-MISSION-CLOCK",
@@ -80,6 +80,19 @@
         "docs/dell_lab_sync/BUZON_MULTIMODAL_OMNICANAL.md",
         "apps/command-center/"
       ]
+    },
+    {
+      "routine_id": "ROUTINE-DELL-04",
+      "task_id": "MKT-01",
+      "title": "Marketing & LegalTech: Auditoría de 10 Sitios Locales y Producción Trilogía Ya Perdiste",
+      "status": "READY",
+      "recommended_model": "Gemini 4 Argon (Max)",
+      "files": [
+        "scripts/auditor_legal_web.py",
+        "docs/dell_lab_sync/01_BITACORA_COMPLETA_MARKETING_Y_LEGALTECH_ANTIGRAVITY.md",
+        "docs/dell_lab_sync/PLAN_VIDEO_YA_PERDISTE.md",
+        "docs/dell_lab_sync/PROPUESTA_NEGOCIO_ENTRE_ECLIPSE_Y_CONDICIONES.md"
+      ]
     }
   ],
   "ping_history": [
@@ -132,6 +145,16 @@
       "commit": "f775096",
       "branch": "dev/mission-002",
       "note": "Reto Red Team 99ac384 superado (81/81 pytest) + Biblioteca Informatica PJENL completa (CPCNL 44-87, Acuerdos 2011-2025) sincronizados en main, dev/mission-002 y gh-pages."
+    },
+    {
+      "sequence": 6,
+      "timestamp_utc": "2026-11-19T14:38:00Z",
+      "from_node": "MAC_COMMAND_CENTER",
+      "to_node": "DELL_WINDOWS_LAB",
+      "ping_id": "PING-MAC-TO-DELL-MARKETING-001",
+      "commit": "505ba8c",
+      "branch": "main",
+      "note": "Sincronizado avance de Marketing, Trilogia Ya Perdiste, Alianza Entre eclipse y condiciones, script auditor_legal_web.py y bitacora para continuar en Dell Windows."
     }
   ]
 }
