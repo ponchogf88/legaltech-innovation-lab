@@ -80,6 +80,19 @@
         "docs/dell_lab_sync/BUZON_MULTIMODAL_OMNICANAL.md",
         "apps/command-center/"
       ]
+    },
+    {
+      "routine_id": "ROUTINE-DELL-04",
+      "task_id": "MKT-01",
+      "title": "Marketing & LegalTech: Auditoría de 10 Sitios Locales y Producción Trilogía Ya Perdiste",
+      "status": "READY",
+      "recommended_model": "Gemini 4 Argon (Max)",
+      "files": [
+        "scripts/auditor_legal_web.py",
+        "docs/dell_lab_sync/01_BITACORA_COMPLETA_MARKETING_Y_LEGALTECH_ANTIGRAVITY.md",
+        "docs/dell_lab_sync/PLAN_VIDEO_YA_PERDISTE.md",
+        "docs/dell_lab_sync/PROPUESTA_NEGOCIO_ENTRE_ECLIPSE_Y_CONDICIONES.md"
+      ]
     }
   ],
   "ping_history": [

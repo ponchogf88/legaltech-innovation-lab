@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dictamen Legal Digital — example.com</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #F1F5F9; color: #0F172A; margin: 0; padding: 30px; }
+        .page { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 20px; margin-bottom: 25px; }
+        .brand-title { font-size: 18px; font-weight: 800; color: #0F172A; letter-spacing: 0.5px; }
+        .brand-sub { font-size: 13px; color: #64748B; font-weight: 500; }
+        .partner { text-align: right; font-size: 13px; color: #0284C7; font-weight: 700; }
+        .score-box { display: flex; gap: 20px; background: #FEE2E2; border: 1px solid #EF4444; border-radius: 8px; padding: 18px 24px; margin-bottom: 25px; align-items: center; }
+        .score-num { font-size: 42px; font-weight: 900; color: #EF4444; line-height: 1; }
+        .score-meta { flex: 1; }
+        .score-title { font-size: 17px; font-weight: 800; color: #EF4444; margin: 0 0 4px 0; }
+        .score-desc { font-size: 13px; color: #334155; margin: 0; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px; padding: 14px 18px; margin-bottom: 25px; font-size: 13px; }
+        .meta-item strong { color: #475569; }
+        .section-title { font-size: 16px; font-weight: 800; text-transform: uppercase; color: #1E293B; letter-spacing: 0.5px; margin: 25px 0 14px 0; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; }
+        .cta-box { margin-top: 35px; background: #0F172A; color: white; padding: 22px; border-radius: 8px; text-align: center; }
+        .cta-btn { display: inline-block; margin-top: 10px; background: #38BDF8; color: #0F172A; font-weight: bold; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 14px; }
+        @media print { body { background: white; padding: 0; } .page { box-shadow: none; padding: 20px; } .cta-box { background: #F8FAFC; color: black; border: 1px solid #CBD5E1; } .cta-btn { border: 1px solid black; } }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <div>
+                <div class="brand-title">GUTIÉRREZ CONSULTING · AI LAW</div>
+                <div class="brand-sub">Litigio Corporativo, Ciberseguridad &amp; Compliance Digital</div>
+            </div>
+            <div class="partner">
+                <span>EN ALIANZA CON</span><br>
+                <span style="font-size: 15px; color: #8B5CF6;">Entre eclipse y condiciones</span>
+            </div>
+        </div>
+
+        <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 6px 0; color: #0F172A;">DICTAMEN TÉCNICO DE CUMPLIMIENTO DIGITAL</h2>
+        <p style="color: #64748B; font-size: 13px; margin: 0 0 20px 0;">Auditoría automatizada de Aviso de Privacidad y Términos conforme a la LFPDPPP y PROFECO.</p>
+
+        <div class="score-box">
+            <div class="score-num">100%</div>
+            <div class="score-meta">
+                <div class="score-title">NIVEL DE RIESGO: CRÍTICO</div>
+                <div class="score-desc">Contingencia económica estimada ante inspección del INAI: <strong>$1,085,000 – $4,300,000 MXN</strong>.</div>
+            </div>
+        </div>
+
+        <div class="meta-grid">
+            <div class="meta-item"><strong>Dominio evaluado:</strong> https://example.com</div>
+            <div class="meta-item"><strong>Fecha de auditoría:</strong> 2026-11-18 13:54:54</div>
+            <div class="meta-item"><strong>Aviso de Privacidad:</strong> <span style="color:red;font-weight:bold;">No detectado</span></div>
+            <div class="meta-item"><strong>Términos y Condiciones:</strong> No detectado en inicio</div>
+        </div>
+
+        <div class="section-title">Hallazgos e Inconsistencias Normativas (1)</div>
+        
+        <div style="margin-bottom: 16px; padding: 14px 18px; background: #F8FAFC; border-left: 4px solid #DC2626; border-radius: 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #0F172A; font-size: 15px;">Inexistencia Absoluta de Aviso de Privacidad</strong>
+                <span style="background: #DC2626; color: white; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold;">CRÍTICO</span>
+            </div>
+            <p style="margin: 0 0 6px 0; color: #334155; font-size: 13.5px; line-height: 1.5;">El sitio web recolecta datos o tiene tráfico sin contar con enlace público a un Aviso de Privacidad.</p>
+            <small style="color: #64748B; font-size: 12px; font-style: italic;">Fundamento legal: Violación directa a los Arts. 15, 16 y 17 de la LFPDPPP.</small>
+        </div>
+        
+
+        <div class="section-title">Puntos de Cumplimiento Favorable</div>
+        <ul style="margin: 0; padding-left: 20px; font-size: 13.5px;">
+            <li style='color: #64748B;'>No se identificaron elementos de cumplimiento robustos en el texto analizado.</li>
+        </ul>
+
+        <div class="cta-box">
+            <h3 style="margin: 0 0 6px 0; font-size: 17px;">Programa de Regularización Exprés (48 Horas)</h3>
+            <p style="margin: 0 0 10px 0; font-size: 13px; opacity: 0.9;">Blindamos su sitio web con Aviso de Privacidad y Términos a la medida, adaptados 100% a la ley mexicana y su modelo de negocio.</p>
+            <div style="font-size: 12px; opacity: 0.8; margin-bottom: 8px;">Contacto directo: WhatsApp +52 81 4005 0088 · jesus.alfonso@gutierrezconsultores.net</div>
+        </div>
+
+        <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; font-size: 11px; color: #94A3B8;">
+            <div>Dictamen emitido por Lic. Jesús Alfonso Gutiérrez Flores (Céd. Prof. 11557818)</div>
+            <div>Validación técnica: Motor Antigravity v2.6</div>
+        </div>
+    </div>
+</body>
+</html>
