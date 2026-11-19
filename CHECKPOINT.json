@@ -1,18 +1,18 @@
 {
-  "checkpoint_id": "CHK-20261118T194616Z",
-  "timestamp_utc": "2026-11-18T19:46:16Z",
-  "last_completed_operation": "Self-healed all 4 Dell Red Team findings (99ac384) + PJENL informatics library — 81/81 pytest, security-check 6/6",
+  "checkpoint_id": "CHK-20261119T163033Z",
+  "timestamp_utc": "2026-11-19T16:30:33Z",
+  "last_completed_operation": "Regio Law Titanium + Liquid Glass + Reasoning Room B&W + AI Case-Type/Manual Override + Persona MDs + Windows continuity — 82/82 pytest",
   "current_branch": "dev/mission-002",
-  "current_git_commit": "f7750962de4270cbbfb89df587f91b41f42ffd19",
-  "current_git_short_commit": "f775096",
+  "current_git_commit": "244688a793b389b344ce48249c29b6f22683358c",
+  "current_git_short_commit": "244688a",
   "uncommitted_changes": [],
   "clock_status": {
     "immutable_start_iso": "2026-11-15T14:03:47-06:00",
     "deadline_iso": "2026-11-18T14:03:47-06:00",
-    "elapsed_human": "71h 42m 29s",
-    "remaining_human": "00h 17m 30s",
-    "progress_pct": 99.59,
-    "is_expired": false
+    "elapsed_human": "92h 26m 46s",
+    "remaining_human": "00h 00m 00s",
+    "progress_pct": 100.0,
+    "is_expired": true
   },
   "remaining_tasks": [],
   "next_executable_task": null,
